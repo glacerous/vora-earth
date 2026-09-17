@@ -1,0 +1,550 @@
+@import url("https://db.onlinewebfonts.com/c/9d4d074c9335825a23cce178ee03b498?family=P22+Mackinac+W01+Book");
+@import "tailwindcss";
+
+:root {
+  /* Colors */
+  --color-warm-bone: #fafaf9;
+  --color-paper-white: #ffffff;
+  --color-stone-mist: #e7e5e4;
+  --color-bark-grey: #79716b;
+  --color-charcoal: #292524;
+  --color-obsidian: #0c0a09;
+  --color-pebble: #a6a09b;
+  --color-forest-moss: #616c39;
+  --color-deep-moss: #4e572c;
+  --color-terracotta: #d97757;
+  --color-lichen-green: #5ea500;
+  --color-tide-teal: #22b8cd;
+  --color-alarm-red: #ff0000;
+  --color-sapphire-link: #007ebb;
+
+  /* Typography — Font Families */
+  --font-geist: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-cooper-ltbt: var(--font-serif-display), 'Cooper LtBT', "P22 Mackinac W01 Book", Georgia, serif;
+  --font-geist-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+@theme inline {
+  --color-warm-bone: #fafaf9;
+  --color-paper-white: #ffffff;
+  --color-stone-mist: #e7e5e4;
+  --color-bark-grey: #79716b;
+  --color-charcoal: #292524;
+  --color-obsidian: #0c0a09;
+  --color-pebble: #a6a09b;
+  --color-forest-moss: #616c39;
+  --color-deep-moss: #4e572c;
+  --color-terracotta: #d97757;
+  --color-lichen-green: #5ea500;
+  --color-tide-teal: #22b8cd;
+  --color-alarm-red: #ff0000;
+  --color-sapphire-link: #007ebb;
+
+  --font-sans: var(--font-geist-sans), var(--font-inter), system-ui, sans-serif;
+  --font-serif: var(--font-serif-display), "P22 Mackinac W01 Book", Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-head: var(--font-anton), Impact, sans-serif;
+  --font-outfit: var(--font-outfit), sans-serif;
+  
+  --ease-out-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 500ms;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #fafaf9;
+  color: #292524;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Lenis smooth scrolling compatibility */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Natural Organic Liquid Metaball Loader with Detaching Droplets */
+.metaball-loader .fluid-core {
+  transform-origin: 120px 120px;
+  animation: fluid-core-breathe 3.2s ease-in-out infinite alternate;
+}
+
+.metaball-loader .fluid-orbit-1 {
+  transform-origin: 120px 120px;
+  animation: fluid-stretch-1 3.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.metaball-loader .fluid-orbit-2 {
+  transform-origin: 120px 120px;
+  animation: fluid-stretch-2 2.7s cubic-bezier(0.42, 0, 0.58, 1) -0.9s infinite;
+}
+
+.metaball-loader .fluid-orbit-3 {
+  transform-origin: 120px 120px;
+  animation: fluid-stretch-3 4.1s cubic-bezier(0.4, 0.1, 0.6, 0.9) -1.7s infinite;
+}
+
+.metaball-loader .fluid-orbit-4 {
+  transform-origin: 120px 120px;
+  animation: fluid-stretch-4 2.2s cubic-bezier(0.35, 0.2, 0.35, 0.9) -0.5s infinite;
+}
+
+@keyframes fluid-core-breathe {
+  0% {
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+
+/* Droplet 1: swings far out to detach freely, then pulls back and merges */
+@keyframes fluid-stretch-1 {
+  0% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  40% {
+    transform: rotate(140deg) translate(18px, -22px);
+  }
+  75% {
+    transform: rotate(270deg) translate(-12px, 15px);
+  }
+  100% {
+    transform: rotate(360deg) translate(0, 0);
+  }
+}
+
+/* Droplet 2: counter-orbit with free-floating separation */
+@keyframes fluid-stretch-2 {
+  0% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  45% {
+    transform: rotate(-160deg) translate(-22px, -16px);
+  }
+  80% {
+    transform: rotate(-290deg) translate(14px, 12px);
+  }
+  100% {
+    transform: rotate(-360deg) translate(0, 0);
+  }
+}
+
+/* Little satellite bead: wide eccentric orbit that drifts far out */
+@keyframes fluid-stretch-3 {
+  0% {
+    transform: rotate(45deg) translate(15px, -25px);
+  }
+  50% {
+    transform: rotate(225deg) translate(-20px, 30px);
+  }
+  100% {
+    transform: rotate(405deg) translate(15px, -25px);
+  }
+}
+
+/* Micro droplet: fast dancing bead */
+@keyframes fluid-stretch-4 {
+  0% {
+    transform: rotate(0deg) translate(-10px, 20px);
+  }
+  50% {
+    transform: rotate(180deg) translate(25px, -20px);
+  }
+  100% {
+    transform: rotate(360deg) translate(-10px, 20px);
+  }
+}
+
+.metaball-loader .arm1 {
+  transform-origin: 300px 200px;
+  animation: metaball-rotate 3s ease-in-out infinite;
+}
+
+.metaball-loader .arm2 {
+  transform-origin: 400px 200px;
+  animation: metaball-rotate 2.2s ease-in-out infinite;
+}
+
+.metaball-loader .arm3 {
+  transform-origin: 490px 200px;
+  animation: metaball-rotate 1.5s ease-in-out infinite;
+}
+
+/* Animate second arm segment relative to elbow */
+.metaball-loader .arm1 {
+  transform-origin: 300px 200px;
+  animation: metaball-rotate 10s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.metaball-loader .arm2 {
+  transform-origin: 400px 200px;
+  animation: metaball-rotate 7.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.metaball-loader .arm3 {
+  transform-origin: 490px 200px;
+  animation: metaball-rotate 5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+/* Animate second arm segment relative to elbow */
+.metaball-loader .arm1 {
+  transform-origin: 300px 200px;
+  animation: metaball-rotate 23s ease-in-out infinite;
+}
+
+.metaball-loader .arm2 {
+  transform-origin: 400px 200px;
+  animation: metaball-rotate 17s ease-in-out infinite;
+}
+
+.metaball-loader .arm3 {
+  transform-origin: 490px 200px;
+  animation: metaball-rotate 11s ease-in-out infinite;
+}
+
+/* Custom Search Bar - Whatsapp Style */
+.whatsapp-search-form {
+  --input-bg: #ffffff;
+  --padding: 1em;
+  --rotate: 80deg;
+  --gap: 2.25em;
+  --icon-change-color: #10b981;
+  --height: 44px;
+  width: 100%;
+  max-width: 280px;
+  padding-inline-end: 1em;
+  background: var(--input-bg);
+  position: relative;
+  border-radius: 12px;
+  border: 1.5px solid #cbd5e1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.whatsapp-search-form:hover {
+  border-color: #94a3b8;
+}
+
+.whatsapp-search-form:focus-within {
+  border-color: #191919;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.whatsapp-search-form label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--height);
+  cursor: text;
+}
+
+.whatsapp-search-form input {
+  width: 100%;
+  padding-inline-start: calc(var(--padding) + var(--gap));
+  outline: none;
+  background: none;
+  border: 0;
+  color: #191919;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.whatsapp-search-form input::placeholder {
+  color: #94a3b8;
+}
+
+.whatsapp-search-form svg {
+  color: #64748b;
+  transition: 0.3s cubic-bezier(.4,0,.2,1);
+  position: absolute;
+  height: 15px;
+  width: 15px;
+}
+
+.whatsapp-search-icon {
+  position: absolute;
+  left: var(--padding);
+  transition: 0.3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.whatsapp-search-swap-off {
+  transform: rotate(-80deg);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.whatsapp-search-close-btn {
+  background: none;
+  border: none;
+  position: absolute;
+  right: 0.75rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  padding: 0.1em;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  transition: 0.3s;
+  opacity: 0;
+  transform: scale(0);
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.whatsapp-search-close-btn:hover {
+  background-color: #f1f5f9;
+  color: #191919;
+}
+
+.whatsapp-search-form input:focus ~ .whatsapp-search-icon {
+  transform: rotate(var(--rotate)) scale(1.15);
+}
+
+.whatsapp-search-form input:focus ~ .whatsapp-search-icon .whatsapp-search-swap-off {
+  opacity: 1;
+  transform: rotate(-80deg);
+  visibility: visible;
+  color: var(--icon-change-color);
+}
+
+.whatsapp-search-form input:focus ~ .whatsapp-search-icon .whatsapp-search-swap-on {
+  opacity: 0;
+  visibility: visible;
+}
+
+.whatsapp-search-form input:valid ~ .whatsapp-search-icon {
+  transform: scale(1.15) rotate(var(--rotate))
+}
+
+.whatsapp-search-form input:valid ~ .whatsapp-search-icon .whatsapp-search-swap-off {
+  opacity: 1;
+  visibility: visible;
+  color: var(--icon-change-color);
+}
+
+.whatsapp-search-form input:valid ~ .whatsapp-search-icon .whatsapp-search-swap-on {
+  opacity: 0;
+  visibility: visible;
+}
+
+.whatsapp-search-form input:valid ~ .whatsapp-search-close-btn {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: 0.3s;
+}
+
+/* Custom Job-style Card - Uiverse */
+.vora-card {
+  margin: auto;
+  width: 100%;
+  max-width: 320px;
+  background-color: #fefefe;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  color: #141417;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: transform var(--duration-fast) var(--ease-out-smooth), box-shadow var(--duration-fast) var(--ease-out-smooth);
+}
+
+.vora-card:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.04), 0 4px 8px -2px rgba(0, 0, 0, 0.02);
+}
+
+.vora-card:active {
+  transform: translateY(-2px) scale(0.985);
+}
+
+.vora-card-hero {
+  background-color: #fef4e2;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(240, 229, 212);
+  padding: 1.5rem;
+  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 180px;
+}
+
+.vora-card-hero .vora-card-job-title {
+  margin: 1.5rem 0 0 0;
+  padding-right: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vora-card-job-title {
+  line-height: 1.3em;
+  font-size: 1.5rem;
+  font-weight: 850;
+  margin-bottom: 0;
+}
+
+.vora-card-icon {
+  background-color: white;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  color: #141417;
+}
+
+.vora-card-hero-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  font-weight: 700;
+}
+
+.vora-card-footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: start;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 0.75rem 0.25rem;
+  row-gap: 1rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 340px) {
+  .vora-card-footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+.vora-card-job-summary {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.75rem;
+}
+
+.vora-card-btn {
+  width: 100%;
+  font-weight: 500;
+  border: none;
+  display: block;
+  cursor: pointer;
+  text-align: center;
+  padding: 0.45rem 1.25rem;
+  border-radius: 0.5rem;
+  background-color: #141417;
+  color: #fff;
+  font-size: 0.875rem;
+  transition: opacity var(--duration-fast) var(--ease-out-smooth), transform var(--duration-fast) var(--ease-out-smooth);
+}
+
+.vora-card-btn:hover {
+  opacity: 0.95;
+  transform: scale(1.03);
+}
+
+.vora-card-btn:active {
+  transform: scale(0.97);
+}
+
+@media (min-width: 340px) {
+  .vora-card-btn {
+    width: max-content;
+  }
+}
+
+.vora-card-view-save {
+  justify-items: center;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 6px;
+}
+
+.vora-card-delete-btn {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.45rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  color: #dc2626;
+  background-color: transparent;
+  transition: all var(--duration-fast) var(--ease-out-smooth);
+}
+
+.vora-card-delete-btn:hover {
+  background-color: #fef2f2;
+  border-color: #dc2626;
+  transform: scale(1.05);
+}
+
+.vora-card-delete-btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
