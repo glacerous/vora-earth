@@ -982,12 +982,12 @@ export default function PlotDetailPage() {
       : "This plot has high species diversity, reflecting a highly resilient ecological structure.";
   }
   const colorPalettes = [
-    { bg: "bg-[#616c39] hover:bg-[#4e572c]", text: "text-[#616c39]", border: "border-[#616c39]/30", lightBg: "bg-[#616c39]/10" },
-    { bg: "bg-sky-600 hover:bg-sky-500", text: "text-sky-700", border: "border-sky-250", lightBg: "bg-sky-50/50" },
-    { bg: "bg-amber-600 hover:bg-amber-500", text: "text-amber-700", border: "border-amber-250", lightBg: "bg-amber-50/50" },
-    { bg: "bg-purple-600 hover:bg-purple-500", text: "text-purple-700", border: "border-purple-250", lightBg: "bg-purple-50/50" },
-    { bg: "bg-rose-600 hover:bg-rose-500", text: "text-rose-700", border: "border-rose-250", lightBg: "bg-rose-50/50" },
-    { bg: "bg-indigo-600 hover:bg-indigo-500", text: "text-indigo-700", border: "border-indigo-250", lightBg: "bg-indigo-50/50" },
+    { bg: "bg-[#616c39] hover:bg-[#4e572c]", text: "text-[#616c39]", border: "border-[#616c39]/40", lightBg: "bg-[#616c39]/10" },
+    { bg: "bg-[#4a5526] hover:bg-[#3d461f]", text: "text-[#4a5526]", border: "border-[#4a5526]/40", lightBg: "bg-[#4a5526]/10" },
+    { bg: "bg-[#718042] hover:bg-[#5f6c37]", text: "text-[#718042]", border: "border-[#718042]/40", lightBg: "bg-[#718042]/10" },
+    { bg: "bg-[#556434] hover:bg-[#46532b]", text: "text-[#556434]", border: "border-[#556434]/40", lightBg: "bg-[#556434]/10" },
+    { bg: "bg-[#7b8a4a] hover:bg-[#68763e]", text: "text-[#7b8a4a]", border: "border-[#7b8a4a]/40", lightBg: "bg-[#7b8a4a]/10" },
+    { bg: "bg-[#3e4820] hover:bg-[#323a19]", text: "text-[#3e4820]", border: "border-[#3e4820]/40", lightBg: "bg-[#3e4820]/10" },
   ];
 
   const getSpeciesColor = (speciesName: string | null) => {
@@ -1248,19 +1248,12 @@ export default function PlotDetailPage() {
                 </div>
               </section>
 
-              {/* Card: Earth Forward - Smallholder Carbon Yield & MRV Economics */}
-              <section className="bg-gradient-to-br from-white via-white to-emerald-50/30 border border-emerald-600/20 rounded-xl p-5 shadow-sm flex flex-col gap-3.5 select-none relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
-                <div className="flex justify-between items-center border-b border-emerald-100/60 pb-2.5">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <h3 className="font-bold text-xs text-emerald-800 uppercase tracking-wider">
-                      {language === "id" ? "Ekonomi Karbon Petani Kecil" : "Smallholder Carbon Economics"}
-                    </h3>
-                  </div>
-                  <span className="text-xs font-mono font-bold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-200/50">
-                    Earth Forward
-                  </span>
+              {/* Card: Smallholder Carbon Yield & MRV Economics */}
+              <section className="bg-white border border-[#e7e5e4] rounded-xl p-5 shadow-sm flex flex-col gap-3.5 select-none relative">
+                <div className="flex justify-between items-center border-b border-[#fafaf9] pb-2.5">
+                  <h3 className="font-bold text-xs text-[#79716b] uppercase tracking-wider">
+                    {language === "id" ? "Estimasi Nilai Karbon" : "Carbon Yield & Valuation"}
+                  </h3>
                 </div>
 
                 {/* Live Carbon Yield Calculation */}
@@ -1274,7 +1267,7 @@ export default function PlotDetailPage() {
 
                   return (
                     <div className="flex flex-col gap-3.5">
-                      <div className="grid grid-cols-2 gap-3 bg-white/90 border border-emerald-100 rounded-lg p-3 shadow-2xs">
+                      <div className="grid grid-cols-2 gap-3 bg-[#fafaf9] border border-[#e7e5e4] rounded-lg p-3">
                         <div>
                           <span className="text-xs font-semibold text-[#79716b] uppercase tracking-wider block mb-0.5">
                             {language === "id" ? "Total Karbon Plot" : "Total Stored"}
@@ -1283,11 +1276,11 @@ export default function PlotDetailPage() {
                             {plotCo2eTons.toFixed(2)} <span className="text-xs font-sans text-[#79716b] font-medium">t CO₂e</span>
                           </span>
                         </div>
-                        <div className="border-l border-emerald-100 pl-3">
+                        <div className="border-l border-[#e7e5e4] pl-3">
                           <span className="text-xs font-semibold text-[#79716b] uppercase tracking-wider block mb-0.5">
                             {language === "id" ? "Estimasi Nilai Kredit" : "Est. Credit Value"}
                           </span>
-                          <span className="font-serif text-xl font-bold text-emerald-700">
+                          <span className="font-serif text-xl font-bold text-[#4e572c]">
                             ${grossRevenueUsd.toFixed(2)}
                           </span>
                         </div>
@@ -1307,7 +1300,7 @@ export default function PlotDetailPage() {
                           step="5"
                           value={carbonPricePerTon}
                           onChange={(e) => setCarbonPricePerTon(Number(e.target.value))}
-                          className="w-full accent-emerald-600 cursor-pointer h-2 bg-emerald-100 rounded-lg"
+                          className="w-full accent-[#616c39] cursor-pointer h-2 bg-[#e7e5e4] rounded-lg"
                         />
                         <div className="flex justify-between text-xs text-[#79716b] font-mono">
                           <span>$10</span>
@@ -1321,15 +1314,15 @@ export default function PlotDetailPage() {
                           <span>{language === "id" ? "Biaya Survei Tradisional" : "Traditional Manual Survey"}:</span>
                           <span className="line-through text-red-500 font-mono font-medium">${manualCostPerPlotUsd.toFixed(0)}</span>
                         </div>
-                        <div className="flex justify-between items-center font-bold text-emerald-800">
+                        <div className="flex justify-between items-center font-bold text-[#292524]">
                           <span>{language === "id" ? "Biaya Digital Vora" : "Vora Digital MRV"}:</span>
-                          <span className="font-mono text-emerald-700">${voraTotalCostUsd.toFixed(2)} ({language === "id" ? "hemat 99%" : "99% savings"})</span>
+                          <span className="font-mono text-[#4e572c]">${voraTotalCostUsd.toFixed(2)} ({language === "id" ? "hemat 99%" : "99% savings"})</span>
                         </div>
                         <div className="border-t border-[#e7e5e4] pt-2 mt-0.5 flex justify-between items-baseline">
                           <span className="font-bold text-[#292524]">
                             {language === "id" ? "Pendapatan Petani" : "Net Farmer Return"}:
                           </span>
-                          <span className="font-serif text-lg font-bold text-emerald-700">
+                          <span className="font-serif text-lg font-bold text-[#4e572c]">
                             ${netRevenueUsd.toFixed(2)}
                           </span>
                         </div>
@@ -1354,8 +1347,7 @@ export default function PlotDetailPage() {
                     <span className="font-serif text-xl font-bold text-[#292524]">{shannonIndex.toFixed(2)}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={`w-2 h-2 rounded-full ${shannonIndex < 1.5 ? "bg-amber-500" : shannonIndex <= 3.0 ? "bg-[#4e572c]" : "bg-sky-500"}`} />
-                    <span className="text-xs font-bold text-[#292524]">{diversityLevel}</span>
+                    <span className="text-xs font-semibold text-[#4e572c] bg-[#616c39]/10 px-2 py-0.5 rounded border border-[#616c39]/20">{diversityLevel}</span>
                   </div>
                   <p className="text-xs text-[#79716b] leading-relaxed">
                     {diversityDesc}
@@ -1381,7 +1373,6 @@ export default function PlotDetailPage() {
                         <div key={idx} className="flex flex-col gap-1.5">
                           <div className="flex justify-between items-center text-xs text-[#79716b] font-semibold capitalize">
                             <div className="flex items-center gap-1.5 truncate max-w-[80%]">
-                              <span className={`w-2 h-2 rounded-full shrink-0 ${color.bg.split(' ')[0]}`} />
                               <span className="italic truncate text-[#292524]">{spec}</span>
                               <span className="text-xs text-[#79716b] font-normal shrink-0">({specScans.length} {language === "id" ? "pohon" : "trees"})</span>
                             </div>
@@ -1464,7 +1455,7 @@ export default function PlotDetailPage() {
                         </>
                       ) : (
                         <>
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#4e572c] inline-block animate-pulse" />
+                          
                           <span className="text-[#616c39] font-bold">{language === "id" ? "Perubahan disimpan" : "Changes saved"}</span>
                         </>
                       )}
@@ -1921,8 +1912,7 @@ export default function PlotDetailPage() {
                       </div>
                       
                       {/* Explicit Scale Indicator Label (Anchored in place, never scales or scrolls) */}
-                      <div className="absolute bottom-5 right-5 bg-white/95 backdrop-blur-xs border border-[#e7e5e4] rounded-lg px-3 py-1.5 text-xs font-medium text-[#79716b] shadow-sm select-none z-30 pointer-events-none flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#4e572c] animate-pulse" />
+                      <div className="absolute bottom-5 right-5 bg-white/95 backdrop-blur-xs border border-[#e7e5e4] rounded-lg px-3 py-1.5 text-xs font-medium text-[#79716b] shadow-sm select-none z-30 pointer-events-none">
                         <span>{language === "id" ? "1 kotak grid = 2 meter" : "1 grid cell = 2 meters"}</span>
                       </div>
                     </>
