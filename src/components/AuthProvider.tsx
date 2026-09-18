@@ -194,7 +194,7 @@ export const translations: Record<string, { id: string; en: string }> = {
   // ── Landing Page (Hero) ─────────────────────────────────────────────────
   "hero.title": { id: "Ukur karbon pohon.", en: "Measure forest carbon." },
   "hero.subtitle": {
-    id: "Platform MRV presisi bertenaga 3D Gaussian Splatting volumetrik dan alometri karbon untuk agroforestri. Rekonstruksi pohon milimeter-akurat, ukur DBH sub-sentimeter, dan verifikasi stok biomassa langsung dari video ponsel.",
+    id: "Platform MRV presisi bertenaga 3D Gaussian Splatting dan alometri karbon untuk agroforestri. Rekonstruksi pohon berakurasi sentimeter, estimasi DBH terstandarisasi, dan verifikasi stok biomassa langsung dari video ponsel.",
     en: "Volumetric 3D Gaussian Splatting and precision allometric MRV for smallholder agroforestry. Reconstruct high-density 3D tree models, measure sub-centimeter DBH, and verify stored biomass directly from standard phone video.",
   },
   "hero.viewExample": { id: "Lihat Contoh Scan", en: "View Example Scan" },
@@ -245,13 +245,13 @@ export const translations: Record<string, { id: string; en: string }> = {
   // ── Deep Dive #01 ───────────────────────────────────────────────────────
   "feat1.eyebrow": { id: "#01 — 3D GAUSSIAN SPLATTING", en: "#01 — 3D GAUSSIAN SPLATTING" },
   "feat1.title": {
-    id: "Ubah video ponsel menjadi model 3D berakurasi milimeter.",
-    en: "Turn phone video into millimeter-accurate 3D models.",
+    id: "Ubah video ponsel menjadi model 3D berakurasi sentimeter.",
+    en: "Turn phone video into centimeter-accurate 3D models.",
   },
   "feat1.item1.title": { id: "Pencocokan Citra Ganda MASt3R", en: "MASt3R Dual-View Matching" },
   "feat1.item1.desc": {
-    id: "Triangulasi point-cloud rapat dari frame video yang tumpang-tindih merekonstruksi pose kamera dengan presisi tinggi tanpa penanda fisik.",
-    en: "Dense point-cloud triangulation across overlapping video frames recovers millimeter-accurate camera poses without markers.",
+    id: "Triangulasi point-cloud rapat dari frame video yang tumpang-tindih merekonstruksi pose kamera terkalibrasi metrik tanpa penanda fisik.",
+    en: "Dense point-cloud triangulation across overlapping video frames recovers metric-calibrated camera poses without markers.",
   },
   "feat1.item2.title": { id: "Optimasi GPU InstantSplat", en: "InstantSplat GPU Optimization" },
   "feat1.item2.desc": {
@@ -260,8 +260,8 @@ export const translations: Record<string, { id: string; en: string }> = {
   },
   "feat1.item3.title": { id: "Isolasi Permukaan RANSAC", en: "RANSAC Ground-Isolation" },
   "feat1.item3.desc": {
-    id: "Ekstraksi bidang tanah otomatis memisahkan lereng kontur hutan dan mengeliminasi 100% partikel melayang di udara.",
-    en: "Automated plane extraction separates the forest terrain slope and eliminates 100% of air floater particles.",
+    id: "Ekstraksi bidang tanah otomatis memisahkan lereng kontur hutan dan mereduksi partikel melayang di latar belakang.",
+    en: "Automated plane extraction isolates forest terrain slope and suppresses stray background floater artifacts.",
   },
   "feat1.node1.title": { id: "Input Frame Video 360°", en: "Input 360° Video Frames" },
   "feat1.node1.sub": { id: "48 sudut pandang tumpang-tindih @ 800px", en: "48 high-overlap views @ 800px" },
@@ -270,7 +270,7 @@ export const translations: Record<string, { id: string; en: string }> = {
   "feat1.node2.sub": { id: "Pengepasan lingkaran pada 1,30m · DBH = 13,69 cm", en: "Circle fitting at 1.30m · DBH = 13.69 cm" },
   "feat1.node2.badge": { id: "TEROPTIMASI", en: "OPTIMIZED" },
   "feat1.node3.title": { id: "3D Gaussian Splatting (.ksplat)", en: "3D Gaussian Splatting (.ksplat)" },
-  "feat1.node3.sub": { id: "Mesh volumetrik terkompresi siap untuk WebGL", en: "Compressed volumetric mesh ready for WebGL" },
+  "feat1.node3.sub": { id: "Format 3D Gaussians terkompresi siap untuk WebGL", en: "Compressed 3D Gaussian Splats ready for WebGL" },
   "feat1.node3.badge": { id: "SIAP", en: "READY" },
   "feat1.link": { id: "Pelajari Selengkapnya tentang Pipeline 3D Splatting →", en: "All About 3D Splatting Pipeline →" },
 
@@ -459,7 +459,7 @@ export const translations: Record<string, { id: string; en: string }> = {
   "auth.registerTitle": { id: "Daftar Akun Baru", en: "Create your Vora account" },
   "auth.registerSub": {
     id: "Mulai memetakan pohon dan mengukur karbon hutan dengan presisi tinggi.",
-    en: "Start mapping trees and measuring forest carbon with millimeter precision.",
+    en: "Start mapping trees and measuring forest carbon with sub-2cm precision.",
   },
   "auth.email": { id: "Alamat Email", en: "Email Address" },
   "auth.password": { id: "Kata Sandi", en: "Password" },

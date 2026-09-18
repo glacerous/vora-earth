@@ -36,8 +36,8 @@ export default function PipelineDocPage() {
           </h1>
           <p className="mt-4 text-base sm:text-lg text-[#79716b] max-w-2xl leading-relaxed">
             {isId
-              ? "Pelajari bagaimana Vora mentransformasi video perputaran 360° dari ponsel pintar biasa menjadi representasi 3D berakurasi milimeter dengan isolasi kontur tanah dan pengepasan diameter batang."
-              : "Discover how Vora transforms standard 360° smartphone video into millimeter-accurate 3D volumetric models with terrain slope isolation and trunk diameter fitting."}
+              ? "Pelajari bagaimana Vora mentransformasi video perputaran 360° dari ponsel pintar biasa menjadi representasi 3D berakurasi sentimeter (±1.5 cm) dengan isolasi kontur tanah dan pengepasan diameter batang."
+              : "Discover how Vora transforms standard 360° smartphone video into centimeter-accurate (±1.5 cm) 3D volumetric models with terrain slope isolation and trunk diameter fitting."}
           </p>
         </div>
       </Reveal>
