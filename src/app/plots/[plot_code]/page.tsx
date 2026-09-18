@@ -93,6 +93,9 @@ export default function PlotDetailPage() {
   // State for custom delete confirmation modal
   const [treeToRemove, setTreeToRemove] = useState<string | null>(null);
 
+  // State for interactive 3D Digital Twin Viewer modal
+  const [previewScan, setPreviewScan] = useState<Scan | null>(null);
+
   // {language === "id" ? "Edit Plot" : "Edit Plot"} metadata modal states
   const [isEditPlotModalOpen, setIsEditPlotModalOpen] = useState(false);
   const [editName, setEditName] = useState("");
@@ -1120,6 +1123,19 @@ export default function PlotDetailPage() {
                     <span className="text-xs text-[#79716b] mt-1 block">
                       {language === "id" ? "Oleh" : "By"} <span className="text-[#292524] font-semibold">{plot?.owner.display_name}</span> &bull; {plot && new Date(plot.created_at).toLocaleDateString(language === "id" ? "id-ID" : "en-US", { day: "numeric", month: "short", year: "numeric" })}
                     </span>
+
+                    <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-medium bg-[#fafaf9] text-[#57534e] border border-[#e7e5e4] px-2 py-0.5 rounded-md">
+                        <svg className="w-3 h-3 text-[#79716b] shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                        Yogyakarta, ID (-7.78°S, 110.41°E)
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-medium bg-[#616c39]/10 text-[#4e572c] border border-[#616c39]/20 px-2 py-0.5 rounded-md">
+                        🌿 Agroforestry
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[9px] font-mono text-[#79716b] bg-[#fafaf9] border border-[#e7e5e4] px-1.5 py-0.5 rounded-md">
+                        3D LiDAR / Splat
+                      </span>
+                    </div>
                   </div>
                   <span className="text-xs font-mono font-semibold text-[#4e572c] bg-[#616c39]/10 px-2 py-0.5 rounded border border-[#616c39]/20 shrink-0">
                     {plot?.privacy?.toUpperCase()}
@@ -1278,40 +1294,22 @@ export default function PlotDetailPage() {
                     })
                   )}
                 </div>
-              </section>
 
-              {/* Card 3: Rata-rata & Visual Wave Dist (Fuel Usage & Cost) */}
-              <section className="bg-white border border-[#e7e5e4]/80 rounded-xl p-5 shadow-sm flex flex-col gap-3">
-                <h3 className="font-bold text-xs text-[#79716b] uppercase tracking-wider select-none">
-                  {language === "id" ? "Dimensi Rata-rata & DBH" : "Average Dimensions & DBH"}
-                </h3>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <span className="text-xs font-semibold text-[#79716b] uppercase tracking-wider block select-none mb-0.5">
+                {/* Physical Dimensions Summary inside Card 2 */}
+                <div className="grid grid-cols-2 gap-2 pt-2.5 border-t border-[#e7e5e4] mt-1">
+                  <div className="bg-[#fafaf9] rounded-lg p-2.5 border border-[#e7e5e4] flex flex-col gap-0.5 select-none">
+                    <span className="text-[10px] font-semibold text-[#79716b] uppercase tracking-wider block">
                       {language === "id" ? "Rata-rata DBH" : "Avg DBH"}
                     </span>
-                    <span className="text-xl font-bold font-serif text-[#292524]">{avgDbh.toFixed(1)} cm</span>
+                    <span className="text-base font-bold font-serif text-[#292524]">{avgDbh.toFixed(1)} cm</span>
                   </div>
-                  <div>
-                    <span className="text-xs font-semibold text-[#79716b] uppercase tracking-wider block select-none mb-0.5">
+                  <div className="bg-[#fafaf9] rounded-lg p-2.5 border border-[#e7e5e4] flex flex-col gap-0.5 select-none">
+                    <span className="text-[10px] font-semibold text-[#79716b] uppercase tracking-wider block">
                       {language === "id" ? "Rata-rata Tinggi" : "Avg Height"}
                     </span>
-                    <span className="text-xl font-bold font-serif text-[#292524]">{avgTinggi.toFixed(1)} m</span>
+                    <span className="text-base font-bold font-serif text-[#292524]">{avgTinggi.toFixed(1)} m</span>
                   </div>
                 </div>
-
-                {scans.length >= 5 && (
-                  <div className="flex items-end justify-between h-12 bg-[#fafbfd] border border-[#e7e5e4] rounded-lg p-2.5 mt-0.5 select-none">
-                    {[45, 60, 30, 80, 50, 75, 45, 90, 65, 35, 70, 55, 85, 30].map((h, i) => (
-                      <div
-                        key={i}
-                        style={{ height: `${h}%` }}
-                        className="w-1.5 bg-[#4e572c]/20 hover:bg-[#4e572c] rounded-full transition-all duration-300 cursor-pointer"
-                      />
-                    ))}
-                  </div>
-                )}
               </section>
 
             </div>
@@ -1351,109 +1349,82 @@ export default function PlotDetailPage() {
                   )}
                 </div>
 
-                <div className="flex flex-col md:flex-row gap-3 items-stretch relative w-full">
-                  {/* Vertical Photoshop-style Toolbar */}
-                  <div className="flex flex-row md:flex-col gap-2 bg-[#fafaf9] border border-[#e7e5e4]/85 p-2 rounded-xl shadow-xs shrink-0 items-center justify-center md:justify-start w-full md:w-12 select-none z-20">
-                    
-                    {/* Zoom In Button */}
-                    <div className="relative group">
+                <div className="w-full relative">
+                  {/* Canvas Container with Full Width */}
+                  <div 
+                    ref={containerRef}
+                    style={{ height: "650px" }} 
+                    className="w-full border border-[#e7e5e4] rounded-xl bg-[#fafaf9]/20 p-2 relative overflow-hidden select-none"
+                  >
+                    {/* Floating Figma/Mapbox-style Canvas Controls */}
+                    <div className="absolute top-3 right-3 z-30 flex items-center gap-1 bg-white/95 backdrop-blur-md border border-[#e7e5e4] p-1.5 rounded-xl shadow-md select-none">
+                      {/* Zoom In Button */}
                       <button
                         onClick={(e) => { e.stopPropagation(); zoomIn(); }}
                         disabled={zoomLevel >= 1.25}
-                        className={`p-2 rounded-lg border transition-all cursor-pointer ${
-                          zoomLevel >= 1.25
-                            ? "bg-[#fafaf9] border-[#fafaf9] text-[#d6d3d1] cursor-not-allowed"
-                            : "bg-white border-[#e7e5e4] text-[#79716b] hover:bg-[#fafaf9]"
-                        }`}
+                        title={language === "id" ? "Perbesar" : "Zoom In"}
+                        className="p-1.5 rounded-lg text-[#79716b] hover:text-[#292524] hover:bg-[#fafaf9] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
                       >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
                       </button>
-                      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
-                        {language === "id" ? "Perbesar" : "Zoom In"} ({Math.round(zoomLevel * 100)}%)
-                      </div>
-                    </div>
 
-                    {/* Zoom Out Button */}
-                    <div className="relative group">
+                      {/* Zoom Out Button */}
                       <button
                         onClick={(e) => { e.stopPropagation(); zoomOut(); }}
                         disabled={zoomLevel <= 0.5}
-                        className={`p-2 rounded-lg border transition-all cursor-pointer ${
-                          zoomLevel <= 0.5
-                            ? "bg-[#fafaf9] border-[#fafaf9] text-[#d6d3d1] cursor-not-allowed"
-                            : "bg-white border-[#e7e5e4] text-[#79716b] hover:bg-[#fafaf9]"
-                        }`}
+                        title={language === "id" ? "Perkecil" : "Zoom Out"}
+                        className="p-1.5 rounded-lg text-[#79716b] hover:text-[#292524] hover:bg-[#fafaf9] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
                       >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
                         </svg>
                       </button>
-                      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
-                        {language === "id" ? "Perkecil" : "Zoom Out"} ({Math.round(zoomLevel * 100)}%)
-                      </div>
+
+                      <span className="text-[11px] font-mono font-bold text-[#79716b] px-1 min-w-9 text-center">
+                        {Math.round(zoomLevel * 100)}%
+                      </span>
+
+                      {isOwner && (
+                        <>
+                          <div className="w-px h-4 bg-[#e7e5e4] mx-0.5" />
+                          {/* Draw Area Toggle Button */}
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setIsDrawingMode(!isDrawingMode); }}
+                            title={isDrawingMode ? (language === "id" ? "Selesai Menandai" : "Finish Marking") : (language === "id" ? "Tandai Batas Kanopi" : "Mark Canopy Area")}
+                            className={`px-2 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                              isDrawingMode 
+                                ? "bg-[#616c39] text-white shadow-xs" 
+                                : "text-[#79716b] hover:text-[#292524] hover:bg-[#fafaf9]"
+                            }`}
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75v4.5m0-4.5h-4.5m4.5 0L15 9m5.25 11.25v-4.5m0 4.5h-4.5m4.5 0l-6-6" />
+                            </svg>
+                            <span>{isDrawingMode ? (language === "id" ? "Selesai" : "Done") : (language === "id" ? "Tandai Area" : "Mark Area")}</span>
+                          </button>
+
+                          {/* Clear Areas Button */}
+                          {plotAreas.length > 0 && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setPlotAreas([]);
+                                setSelectedAreaIndex(null);
+                                setIsLayoutDirty(true);
+                              }}
+                              title={language === "id" ? "Hapus Semua Area" : "Clear All Areas"}
+                              className="p-1.5 rounded-lg text-[#a8a29e] hover:text-red-600 hover:bg-red-50 transition-all cursor-pointer"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                              </svg>
+                            </button>
+                          )}
+                        </>
+                      )}
                     </div>
-
-                    {/* Divider for Owner tools */}
-                    {isOwner && <div className="w-full md:w-8 h-px bg-[#e7e5e4] my-0 md:my-1" />}
-
-                    {/* Draw Area Toggle Button */}
-                    {isOwner && (
-                      <div className="relative group">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); setIsDrawingMode(!isDrawingMode); }}
-                          className={`p-2 rounded-lg border transition-all cursor-pointer ${
-                            isDrawingMode 
-                              ? "bg-[#616c39] border-[#616c39] text-white hover:bg-[#4e572c]" 
-                              : "bg-white border-[#e7e5e4] text-[#79716b] hover:bg-[#fafaf9]"
-                          }`}
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75v4.5m0-4.5h-4.5m4.5 0L15 9m5.25 11.25v-4.5m0 4.5h-4.5m4.5 0l-6-6" />
-                          </svg>
-                        </button>
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
-                          {isDrawingMode ? (language === "id" ? "Selesai Menandai" : "Finish Marking") : (language === "id" ? "Tandai Area Plot" : "Mark Plot Area")}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Clear Areas Button */}
-                    {isOwner && plotAreas.length > 0 && (
-                      <div className="relative group">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setPlotAreas([]);
-                            setSelectedAreaIndex(null);
-                            setIsLayoutDirty(true);
-                          }}
-                          className="p-2 rounded-lg border border-red-150 bg-red-50 text-red-650 hover:bg-red-100 transition-all cursor-pointer"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                          </svg>
-                        </button>
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
-                          {language === "id" ? "Hapus Semua Area" : "Clear All Areas"}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Spacer for desktop only */}
-                    <div className="hidden md:block flex-1" />
-
-                  </div>
-
-                  {/* Canvas Container */}
-                  <div className="flex-1 min-w-0 relative">
-                    <>
-                        <div 
-                          ref={containerRef}
-                          style={{ height: "650px" }} 
-                          className="w-full border border-[#e7e5e4] rounded-xl bg-[#fafaf9]/20 p-2 relative overflow-hidden select-none"
-                        >
                           <div
                             style={{
                               transform: `translate3d(${panOffset.x}px, ${panOffset.y}px, 0)`,
@@ -1774,11 +1745,19 @@ export default function PlotDetailPage() {
                               </div>
                             </div>
 
+                            <button
+                              type="button"
+                              onClick={() => setPreviewScan(selectedNode)}
+                              className="bg-[#292524] hover:bg-[#292524]/90 text-white font-semibold text-[10px] rounded py-1.5 text-center shadow-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                            >
+                              <span>{language === "id" ? "Lihat Twin 3D" : "3D Digital Twin"}</span>
+                              <svg className="w-3 h-3 text-[#86efac]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/></svg>
+                            </button>
                             <Link
                               href={`/reconstruct?code=${selectedNode.tree_code}&phase=result`}
-                              className="bg-[#292524] hover:bg-[#292524]/90 text-white font-semibold text-[10px] rounded py-1.5 text-center shadow-sm transition-all"
+                              className="text-[#79716b] hover:text-[#292524] font-medium text-[10px] text-center transition-colors"
                             >
-                              {language === "id" ? "Buka detail →" : "View detail →"}
+                              {language === "id" ? "Buka laporan lengkap →" : "Full reconstruction report →"}
                             </Link>
                             {isOwner && (
                               <button
@@ -1797,15 +1776,30 @@ export default function PlotDetailPage() {
                             </div>
                           </div>
                         </div>
+
+                    {/* Floating Bottom Left Telemetry Badge */}
+                    <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-md border border-[#e7e5e4] rounded-xl px-3 py-1.5 text-xs font-medium text-[#79716b] shadow-sm select-none z-30 flex items-center gap-2.5">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-sm bg-[#616c39] border border-[#4e572c] shrink-0" />
+                        <span className="font-bold text-[#292524]">{plotAreas[0]?.name || (language === "id" ? "Sektor Kanopi A" : "Canopy Sector A")}</span>
                       </div>
-                      
-                      {/* Explicit Scale Indicator Label (Anchored in place, never scales or scrolls) */}
-                      <div className="absolute bottom-5 right-5 bg-white/95 backdrop-blur-xs border border-[#e7e5e4] rounded-lg px-3 py-1.5 text-xs font-medium text-[#79716b] shadow-sm select-none z-30 pointer-events-none">
-                        <span>{language === "id" ? "1 kotak grid = 2 meter" : "1 grid cell = 2 meters"}</span>
-                      </div>
-                    </>
+                      <span className="text-[#e7e5e4]">&bull;</span>
+                      <span>{scans.length} {language === "id" ? "Pohon Terpetakan" : "Mapped Trees"}</span>
+                      {plotAreas[0] && areaStats[0] && (
+                        <>
+                          <span className="text-[#e7e5e4]">&bull;</span>
+                          <span className="font-mono text-[#4e572c] font-bold">{areaStats[0].density.toFixed(1)} t CO₂e/ha</span>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Floating Bottom Right Scale + North Compass */}
+                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md border border-[#e7e5e4] rounded-xl px-3 py-1.5 text-xs font-medium text-[#79716b] shadow-sm select-none z-30 flex items-center gap-2 pointer-events-none">
+                      <span className="font-mono text-[10px] font-bold text-[#4e572c] bg-[#616c39]/15 px-1.5 py-0.5 rounded">N &uarr;</span>
+                      <span>{language === "id" ? "1 kotak = 2 m" : "1 grid cell = 2 m"}</span>
+                    </div>
                   </div>
-              </div>
+                </div>
             </div>
 
               {/* Card 5: Orders-style Tree Scans Table */}
@@ -1936,9 +1930,16 @@ export default function PlotDetailPage() {
                                 
                                 <td className="py-3 px-3 text-right">
                                   <div className="flex items-center justify-end gap-2.5">
-                                    <span className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-[#4e572c] group-hover:text-[#2d5a27] bg-[#616c39]/10 hover:bg-[#616c39]/20 px-2.5 py-1 rounded-md transition-colors">
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setPreviewScan(scan);
+                                      }}
+                                      className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-[#4e572c] hover:text-[#2d5a27] bg-[#616c39]/10 hover:bg-[#616c39]/20 px-2.5 py-1 rounded-md transition-colors cursor-pointer"
+                                    >
                                       3D Splat &rarr;
-                                    </span>
+                                    </button>
                                     {isOwner && (
                                       <button
                                         onClick={(e) => {
@@ -2133,6 +2134,98 @@ export default function PlotDetailPage() {
                     )}
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 3D Digital Twin Viewer Modal */}
+      {previewScan && (
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-3 sm:p-6">
+          <div 
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" 
+            onClick={() => setPreviewScan(null)}
+          />
+          
+          <div className="bg-[#1c1917] text-white border border-[#292524] rounded-2xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl relative z-10 overflow-hidden animate-fadeIn">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center px-5 py-3.5 border-b border-[#292524] bg-[#292524]/60">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs font-bold text-[#86efac] bg-[#1e381e] px-2.5 py-1 rounded-md border border-[#2d502d]">
+                  {previewScan.tree_code}
+                </span>
+                <div>
+                  <h3 className="font-serif text-base text-stone-100 font-medium leading-none">
+                    {getSpeciesName(previewScan) ? (
+                      <i>{getSpeciesName(previewScan)}</i>
+                    ) : (
+                      language === "id" ? "Digital Twin Pohon 3D" : "3D Tree Digital Twin"
+                    )}
+                  </h3>
+                  <span className="text-[11px] text-stone-400 mt-0.5 block">
+                    {previewScan.gps_lat && previewScan.gps_lon ? (
+                      `📍 Yogyakarta (${previewScan.gps_lat.toFixed(5)}°, ${previewScan.gps_lon.toFixed(5)}°)`
+                    ) : (
+                      language === "id" ? "Terpetakan di plot" : "Mapped in plot"
+                    )}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Link
+                  href={`/reconstruct?code=${previewScan.tree_code}&phase=result`}
+                  className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-[#86efac] hover:text-white bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition-colors"
+                >
+                  <span>{language === "id" ? "Laporan Lengkap" : "Full Report"}</span>
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                </Link>
+                <button 
+                  type="button"
+                  onClick={() => setPreviewScan(null)} 
+                  className="text-stone-400 hover:text-white w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* 3D Splat Viewer Viewport */}
+            <div className="w-full h-[460px] bg-black relative">
+              {previewScan.splat_file_url ? (
+                <iframe
+                  src={`${BACKEND_URL}/viewer.html?v=27&code=${previewScan.tree_code}&url=${encodeURIComponent(previewScan.splat_file_url)}&proxy=true`}
+                  allow="xr-spatial-tracking; autoplay; fullscreen"
+                  className="w-full h-full border-none"
+                  title={`3D Tree Gaussian Splat - ${previewScan.tree_code}`}
+                />
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-stone-400">
+                  <p className="text-sm">{language === "id" ? "File 3D Splat sedang diproses atau tidak tersedia." : "3D Splat model is processing or unavailable."}</p>
+                </div>
+              )}
+            </div>
+
+            {/* Biometric Telemetry Bar */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-3 bg-[#181615] border-t border-[#292524] text-xs">
+              <div className="bg-[#24201e] rounded-lg p-2.5 border border-[#332e2b]">
+                <span className="text-[10px] uppercase font-mono text-stone-400 block">DBH</span>
+                <span className="text-sm font-bold text-stone-100 font-mono">{previewScan.dbh_cm.toFixed(1)} cm</span>
+              </div>
+              <div className="bg-[#24201e] rounded-lg p-2.5 border border-[#332e2b]">
+                <span className="text-[10px] uppercase font-mono text-stone-400 block">{language === "id" ? "Tinggi" : "Height"}</span>
+                <span className="text-sm font-bold text-stone-100 font-mono">{previewScan.tinggi_m.toFixed(1)} m</span>
+              </div>
+              <div className="bg-[#24201e] rounded-lg p-2.5 border border-[#332e2b]">
+                <span className="text-[10px] uppercase font-mono text-stone-400 block">{language === "id" ? "Biomassa" : "Biomass"}</span>
+                <span className="text-sm font-bold text-stone-100 font-mono">{previewScan.biomassa_kg.toFixed(1)} kg</span>
+              </div>
+              <div className="bg-[#24201e] rounded-lg p-2.5 border border-[#332e2b]">
+                <span className="text-[10px] uppercase font-mono text-[#86efac] block">CO₂e Sequestration</span>
+                <span className="text-sm font-bold text-[#86efac] font-mono">{previewScan.co2e_kg.toFixed(1)} kg</span>
               </div>
             </div>
           </div>
