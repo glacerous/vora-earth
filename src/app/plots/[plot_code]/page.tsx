@@ -982,12 +982,12 @@ export default function PlotDetailPage() {
       : "This plot has high species diversity, reflecting a highly resilient ecological structure.";
   }
   const colorPalettes = [
-    { bg: "bg-[#616c39] hover:bg-[#4e572c]", text: "text-[#616c39]", border: "border-[#616c39]/40", lightBg: "bg-[#616c39]/10" },
-    { bg: "bg-[#4a5526] hover:bg-[#3d461f]", text: "text-[#4a5526]", border: "border-[#4a5526]/40", lightBg: "bg-[#4a5526]/10" },
-    { bg: "bg-[#718042] hover:bg-[#5f6c37]", text: "text-[#718042]", border: "border-[#718042]/40", lightBg: "bg-[#718042]/10" },
-    { bg: "bg-[#556434] hover:bg-[#46532b]", text: "text-[#556434]", border: "border-[#556434]/40", lightBg: "bg-[#556434]/10" },
-    { bg: "bg-[#7b8a4a] hover:bg-[#68763e]", text: "text-[#7b8a4a]", border: "border-[#7b8a4a]/40", lightBg: "bg-[#7b8a4a]/10" },
-    { bg: "bg-[#3e4820] hover:bg-[#323a19]", text: "text-[#3e4820]", border: "border-[#3e4820]/40", lightBg: "bg-[#3e4820]/10" },
+    { bg: "bg-[#8c4a27] hover:bg-[#783e1f]", text: "text-[#8c4a27]", bar: "bg-gradient-to-r from-[#8c4a27] to-[#b45309]", border: "border-[#8c4a27]/30", lightBg: "bg-[#8c4a27]/10" },
+    { bg: "bg-[#1e4d2b] hover:bg-[#163a20]", text: "text-[#1e4d2b]", bar: "bg-gradient-to-r from-[#1e4d2b] to-[#15803d]", border: "border-[#1e4d2b]/30", lightBg: "bg-[#1e4d2b]/10" },
+    { bg: "bg-[#526034] hover:bg-[#424e29]", text: "text-[#526034]", bar: "bg-gradient-to-r from-[#526034] to-[#6b7c43]", border: "border-[#526034]/30", lightBg: "bg-[#526034]/10" },
+    { bg: "bg-[#3b5249] hover:bg-[#2e4039]", text: "text-[#3b5249]", bar: "bg-gradient-to-r from-[#3b5249] to-[#517165]", border: "border-[#3b5249]/30", lightBg: "bg-[#3b5249]/10" },
+    { bg: "bg-[#705335] hover:bg-[#5b432a]", text: "text-[#705335]", bar: "bg-gradient-to-r from-[#705335] to-[#8c6943]", border: "border-[#705335]/30", lightBg: "bg-[#705335]/10" },
+    { bg: "bg-[#4a5d3f] hover:bg-[#3a4931]", text: "text-[#4a5d3f]", bar: "bg-gradient-to-r from-[#4a5d3f] to-[#607952]", border: "border-[#4a5d3f]/30", lightBg: "bg-[#4a5d3f]/10" },
   ];
 
   const getSpeciesColor = (speciesName: string | null) => {
@@ -1248,12 +1248,17 @@ export default function PlotDetailPage() {
                 </div>
               </section>
 
-              {/* Card: Smallholder Carbon Yield & MRV Economics */}
-              <section className="bg-white border border-[#e7e5e4] rounded-xl p-5 shadow-sm flex flex-col gap-3.5 select-none relative">
-                <div className="flex justify-between items-center border-b border-[#fafaf9] pb-2.5">
-                  <h3 className="font-bold text-xs text-[#79716b] uppercase tracking-wider">
-                    {language === "id" ? "Estimasi Nilai Karbon" : "Carbon Yield & Valuation"}
-                  </h3>
+              {/* Card: Carbon Valuation & Financial Ledger */}
+              <section className="bg-white border border-[#e7e5e4] rounded-xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.03),0_6px_16px_-4px_rgba(0,0,0,0.03)] flex flex-col gap-4 select-none relative">
+                <div className="flex justify-between items-center border-b border-[#fafaf9] pb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#79716b]">
+                      {language === "id" ? "Estimasi Nilai Karbon & Hasil Petani" : "Carbon Valuation & Financial Yield"}
+                    </span>
+                  </div>
+                  <span className="text-[11px] font-mono font-semibold text-[#4e572c] bg-[#616c39]/10 px-2 py-0.5 rounded border border-[#616c39]/20">
+                    VCM Tier
+                  </span>
                 </div>
 
                 {/* Live Carbon Yield Calculation */}
@@ -1265,64 +1270,82 @@ export default function PlotDetailPage() {
                   const voraTotalCostUsd = scans.length * voraCostPerTreeUsd;
                   const netRevenueUsd = Math.max(0, grossRevenueUsd - voraTotalCostUsd);
 
+                  const priceTiers = [
+                    { label: "Floor", price: 10 },
+                    { label: "Gold Standard", price: 25 },
+                    { label: "Agroforestry", price: 60 },
+                  ];
+
                   return (
-                    <div className="flex flex-col gap-3.5">
-                      <div className="grid grid-cols-2 gap-3 bg-[#fafaf9] border border-[#e7e5e4] rounded-lg p-3">
-                        <div>
-                          <span className="text-xs font-semibold text-[#79716b] uppercase tracking-wider block mb-0.5">
-                            {language === "id" ? "Total Karbon Plot" : "Total Stored"}
+                    <div className="flex flex-col gap-4">
+                      {/* Top Metric Cards */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-[#fafaf9] border border-[#e7e5e4] rounded-xl p-3.5 flex flex-col justify-between">
+                          <span className="text-xs font-semibold text-[#79716b] uppercase tracking-wider block">
+                            {language === "id" ? "Total Karbon" : "Stored Carbon"}
                           </span>
-                          <span className="font-serif text-xl font-bold text-[#292524]">
-                            {plotCo2eTons.toFixed(2)} <span className="text-xs font-sans text-[#79716b] font-medium">t CO₂e</span>
-                          </span>
+                          <div className="mt-1 flex items-baseline gap-1">
+                            <span className="font-serif text-2xl font-bold text-[#292524] tracking-tight">
+                              {plotCo2eTons.toFixed(2)}
+                            </span>
+                            <span className="text-xs font-sans text-[#79716b] font-medium">t CO₂e</span>
+                          </div>
                         </div>
-                        <div className="border-l border-[#e7e5e4] pl-3">
-                          <span className="text-xs font-semibold text-[#79716b] uppercase tracking-wider block mb-0.5">
-                            {language === "id" ? "Estimasi Nilai Kredit" : "Est. Credit Value"}
+
+                        <div className="bg-[#fafaf9] border border-[#e7e5e4] rounded-xl p-3.5 flex flex-col justify-between">
+                          <span className="text-xs font-semibold text-[#79716b] uppercase tracking-wider block">
+                            {language === "id" ? "Nilai Kotor Kredit" : "Gross Credit Value"}
                           </span>
-                          <span className="font-serif text-xl font-bold text-[#4e572c]">
-                            ${grossRevenueUsd.toFixed(2)}
-                          </span>
+                          <div className="mt-1">
+                            <span className="font-serif text-2xl font-bold text-[#2d5a27] tracking-tight">
+                              ${grossRevenueUsd.toFixed(2)}
+                            </span>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="flex flex-col gap-1.5 px-0.5">
+                      {/* Interactive Tier Buttons */}
+                      <div className="flex flex-col gap-1.5">
+                        <span className="text-xs font-semibold text-[#79716b]">
+                          {language === "id" ? "Pilih Standar Harga Pasar Karbon:" : "Carbon Market Credit Price:"}
+                        </span>
+                        <div className="grid grid-cols-3 gap-2 bg-[#f5f5f4] p-1 rounded-xl border border-[#e7e5e4]">
+                          {priceTiers.map((tier) => {
+                            const isSelected = carbonPricePerTon === tier.price;
+                            return (
+                              <button
+                                key={tier.price}
+                                type="button"
+                                onClick={() => setCarbonPricePerTon(tier.price)}
+                                className={`py-1.5 px-2 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center ${
+                                  isSelected
+                                    ? "bg-white text-[#292524] shadow-xs border border-[#e7e5e4]"
+                                    : "text-[#79716b] hover:text-[#292524]"
+                                }`}
+                              >
+                                <span className="block truncate">{tier.label}</span>
+                                <span className="font-mono text-[11px] block mt-0.5 text-[#4e572c] font-bold">${tier.price}/t</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Executive Dark Smallholder Return Banner */}
+                      <div className="bg-[#1c2214] text-white border border-[#2a341e] rounded-xl p-4 shadow-sm flex flex-col gap-2.5">
+                        <div className="flex justify-between items-center text-xs text-[#a8b392]">
+                          <span>{language === "id" ? "Biaya Survei Manual Tradisional" : "Traditional Manual MRV"}:</span>
+                          <span className="line-through text-[#ef4444] font-mono font-medium">${manualCostPerPlotUsd.toFixed(0)}</span>
+                        </div>
                         <div className="flex justify-between items-center text-xs">
-                          <span className="text-[#79716b] font-medium">
-                            {language === "id" ? "Harga Pasar Karbon" : "Carbon Credit Price"}:
+                          <span className="text-[#d5dec2]">{language === "id" ? "Biaya Verifikasi Digital Vora" : "Vora 3D Digital MRV"}:</span>
+                          <span className="font-mono text-[#86efac] font-bold">${voraTotalCostUsd.toFixed(2)} ({language === "id" ? "hemat 99%" : "99% savings"})</span>
+                        </div>
+                        <div className="border-t border-white/10 pt-2.5 mt-0.5 flex justify-between items-baseline">
+                          <span className="font-bold text-sm text-white">
+                            {language === "id" ? "Pendapatan Bersih Petani" : "Net Smallholder Return"}:
                           </span>
-                          <span className="font-mono font-bold text-[#292524]">${carbonPricePerTon}/t CO₂e</span>
-                        </div>
-                        <input
-                          type="range"
-                          min="10"
-                          max="60"
-                          step="5"
-                          value={carbonPricePerTon}
-                          onChange={(e) => setCarbonPricePerTon(Number(e.target.value))}
-                          className="w-full accent-[#616c39] cursor-pointer h-2 bg-[#e7e5e4] rounded-lg"
-                        />
-                        <div className="flex justify-between text-xs text-[#79716b] font-mono">
-                          <span>$10</span>
-                          <span>$25 Standard</span>
-                          <span>$60 Premium</span>
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col gap-2 bg-white/90 border border-[#e7e5e4] rounded-lg p-3 text-xs">
-                        <div className="flex justify-between items-center text-[#79716b]">
-                          <span>{language === "id" ? "Biaya Survei Tradisional" : "Traditional Manual Survey"}:</span>
-                          <span className="line-through text-red-500 font-mono font-medium">${manualCostPerPlotUsd.toFixed(0)}</span>
-                        </div>
-                        <div className="flex justify-between items-center font-bold text-[#292524]">
-                          <span>{language === "id" ? "Biaya Digital Vora" : "Vora Digital MRV"}:</span>
-                          <span className="font-mono text-[#4e572c]">${voraTotalCostUsd.toFixed(2)} ({language === "id" ? "hemat 99%" : "99% savings"})</span>
-                        </div>
-                        <div className="border-t border-[#e7e5e4] pt-2 mt-0.5 flex justify-between items-baseline">
-                          <span className="font-bold text-[#292524]">
-                            {language === "id" ? "Pendapatan Petani" : "Net Farmer Return"}:
-                          </span>
-                          <span className="font-serif text-lg font-bold text-[#4e572c]">
+                          <span className="font-serif text-2xl font-bold text-[#86efac] tracking-tight">
                             ${netRevenueUsd.toFixed(2)}
                           </span>
                         </div>
@@ -1378,10 +1401,10 @@ export default function PlotDetailPage() {
                             </div>
                             <span className="font-bold text-[#292524] shrink-0">{specPct.toFixed(0)}%</span>
                           </div>
-                          {/* Progress bar track */}
-                          <div className="h-2 w-full bg-[#fafaf9] rounded-full overflow-hidden border border-[#e7e5e4]/30">
+                          {/* Rich Foliage Progress Bar */}
+                          <div className="h-2 w-full bg-[#fafaf9] rounded-full overflow-hidden border border-[#e7e5e4]">
                             <div 
-                              className={`h-full ${color.bg.split(' ')[0]} rounded-full transition-all duration-500`} 
+                              className={`h-full ${color.bar || color.bg.split(' ')[0]} rounded-full transition-all duration-700 shadow-2xs`} 
                               style={{ width: `${specPct}%` }} 
                             />
                           </div>
@@ -1802,7 +1825,7 @@ export default function PlotDetailPage() {
                             }}
                             title={scan.tree_code}
                           >
-                            {/* The 48x48px Node Box */}
+                            {/* Architectural Canopy Crown Node */}
                             <div
                               draggable={isOwner && !isDrawingMode}
                               onDragStart={(e) => handleDragStart(e, scan.tree_code)}
@@ -1810,20 +1833,20 @@ export default function PlotDetailPage() {
                                 e.stopPropagation();
                                 setSelectedNode(scan);
                               }}
-                              className={`w-12 h-12 rounded-lg border-2 cursor-pointer transition-all flex items-center justify-center hover:scale-105 hover:shadow-md ${
+                              className={`w-12 h-12 rounded-2xl border-2 cursor-pointer transition-all flex items-center justify-center shadow-md hover:scale-110 hover:shadow-lg ${
                                 specColor.bg.split(' ')[0]
                               } ${specColor.border} ${
-                                isSelected ? "ring-4 ring-[#616c39]/35 border-[#616c39] shadow-md scale-105" : ""
+                                isSelected ? "ring-4 ring-[#616c39]/40 border-white shadow-xl scale-110" : ""
                               }`}
                             >
-                              <svg className="w-5.5 h-5.5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                              <svg className="w-6 h-6 text-white drop-shadow-xs" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 19v2m-5-8h10L12 5zM4 17h16L12 11z" />
                               </svg>
                             </div>
                             
-                            {/* Small label below node */}
-                            <span className="text-[8px] font-mono font-bold text-[#79716b] bg-white/80 border border-[#e7e5e4] px-1 py-0.2 rounded shadow-xs mt-1 block w-fit mx-auto text-center pointer-events-none select-none shrink-0 truncate max-w-full">
-                              #{scan.tree_code.replace("POHON-", "")}
+                            {/* Canopy Label Pill with DBH */}
+                            <span className="text-[9px] font-mono font-bold text-[#292524] bg-white/95 backdrop-blur-xs border border-[#e7e5e4] px-1.5 py-0.5 rounded-md shadow-xs mt-1 block w-fit mx-auto text-center pointer-events-none select-none shrink-0 truncate max-w-full">
+                              #{scan.tree_code.replace("POHON-", "")} &middot; {scan.dbh_cm.toFixed(0)}cm
                             </span>
                           </div>
                         );
@@ -1989,7 +2012,7 @@ export default function PlotDetailPage() {
                               {/* Row click to view details */}
                               <tr 
                                 onClick={() => router.push(`/reconstruct?code=${scan.tree_code}&phase=result`)}
-                                className="border-b border-[#fafaf9]/50 hover:bg-[#fafaf9]/50 transition-colors cursor-pointer"
+                                className="group border-b border-[#fafaf9] hover:bg-[#fafaf9] transition-all cursor-pointer"
                               >
                                 <td className="py-3 px-3">
                                   <div className="flex items-center gap-2.5">
@@ -2047,7 +2070,10 @@ export default function PlotDetailPage() {
                                 </td>
                                 
                                 <td className="py-3 px-3 text-right">
-                                  <div className="flex items-center justify-end gap-2">
+                                  <div className="flex items-center justify-end gap-2.5">
+                                    <span className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-[#4e572c] group-hover:text-[#2d5a27] bg-[#616c39]/10 hover:bg-[#616c39]/20 px-2.5 py-1 rounded-md transition-colors">
+                                      3D Splat &rarr;
+                                    </span>
                                     {isOwner && (
                                       <button
                                         onClick={(e) => {
@@ -2055,7 +2081,7 @@ export default function PlotDetailPage() {
                                           setTreeToRemove(scan.tree_code);
                                         }}
                                         title={language === "id" ? "Keluarkan dari plot" : "Remove from plot"}
-                                        className="p-1.5 rounded-lg text-red-500 hover:text-red-700 hover:bg-red-50 transition-all cursor-pointer flex items-center justify-center"
+                                        className="p-1.5 rounded-lg text-[#a8a29e] hover:text-red-600 hover:bg-red-50 transition-all cursor-pointer flex items-center justify-center"
                                       >
                                         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                                           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
