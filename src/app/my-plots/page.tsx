@@ -315,8 +315,19 @@ export default function MyPlotsPage() {
                               {language === "id" ? "Scan tidak valid" : "Invalid scan"}
                             </span>
                           ) : (
-                            <span className="text-[11px] font-mono text-[#79716b] mt-0.5">
-                              {record.dbh_cm ? `${formatDbh(record.dbh_cm, unit)} DBH` : "-"} · {record.tinggi_m ? `${formatHeight(record.tinggi_m, unit)} H` : "-"}
+                            <span 
+                              className="text-[11px] font-mono text-[#79716b] mt-0.5 inline-flex items-center gap-1 flex-wrap"
+                              title={record.tinggi_m && record.tinggi_m < 3.0 ? (language === "id" ? "Segmen batang terpindai. Biomassa pohon dihitung menggunakan model allometri DBH pohon utuh Chave et al. (2005)." : "Scanned trunk segment. Whole-tree biomass calculated using Chave et al. (2005) DBH allometry.") : undefined}
+                            >
+                              <span>{record.dbh_cm ? `${formatDbh(record.dbh_cm, unit)} DBH` : "-"}</span>
+                              <span>·</span>
+                              <span>
+                                {record.tinggi_m ? (
+                                  record.tinggi_m < 3.0 
+                                    ? `${language === "id" ? "Segmen" : "Trunk"}: ${formatHeight(record.tinggi_m, unit)}`
+                                    : `${formatHeight(record.tinggi_m, unit)} H`
+                                ) : "-"}
+                              </span>
                             </span>
                           )}
                         </div>

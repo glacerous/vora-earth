@@ -1212,7 +1212,9 @@ function ReconstructContent() {
               </div>
 
               <div className="flex flex-col gap-0.5 pl-4 sm:pl-6">
-                <span className="text-[9px] font-bold uppercase tracking-widest text-[#79716b]">{language === "id" ? "Tinggi" : "Height"}</span>
+                <span className="text-[9px] font-bold uppercase tracking-widest text-[#79716b]">
+                  {currentScan.tinggi_m && currentScan.tinggi_m < 3.0 ? (language === "id" ? "Segmen Batang" : "Trunk Segment") : (language === "id" ? "Tinggi" : "Height")}
+                </span>
                 <div className="flex items-baseline">
                   <span className="font-serif text-2xl text-[#292524] leading-none">{currentScan.tinggi_m?.toFixed(1) ?? "--"}</span>
                   <span className="text-[11px] text-[#79716b] font-medium ml-1">m</span>
@@ -1379,7 +1381,9 @@ function ReconstructContent() {
                     </div>
                   </div>
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-[#79716b]">{language === "id" ? "Tinggi" : "Height"}</span>
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-[#79716b]">
+                      {currentScan.tinggi_m && currentScan.tinggi_m < 3.0 ? (language === "id" ? "Segmen Batang" : "Trunk Segment") : (language === "id" ? "Tinggi" : "Height")}
+                    </span>
                     <div className="flex items-baseline">
                       <span className="font-serif text-xl text-[#292524] font-bold">{currentScan.tinggi_m?.toFixed(1) ?? "--"}</span>
                       <span className="text-[10px] text-[#79716b] font-medium ml-1">m</span>
@@ -1579,8 +1583,22 @@ function ReconstructContent() {
                       </p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[#79716b] font-medium">
                         <div>{language === "id" ? "Diameter (DBH - Pengepasan Lingkaran, Utama):" : "Diameter (DBH - Circle Fit, Primary):"} <span className="font-semibold text-[#292524]">{formatDbh(currentScan.dbh_cm, unit)}</span></div>
-                        <div>{language === "id" ? "Tinggi Pohon:" : "Tree Height:"} <span className="font-semibold text-[#292524]">{formatHeight(currentScan.tinggi_m, unit)}</span></div>
+                        <div>
+                          {currentScan.tinggi_m && currentScan.tinggi_m < 3.0 
+                            ? (language === "id" ? "Segmen Batang:" : "Trunk Segment:") 
+                            : (language === "id" ? "Tinggi Pohon:" : "Tree Height:")}{" "}
+                          <span className="font-semibold text-[#292524]">{formatHeight(currentScan.tinggi_m, unit)}</span>
+                        </div>
                       </div>
+                      {currentScan.tinggi_m && currentScan.tinggi_m < 3.0 && (
+                        <div className="pt-1 border-t border-dashed border-[#fafaf9] flex flex-col gap-0.5">
+                          <span className="text-[10px] text-[#79716b]/80 italic">
+                            {language === "id"
+                              ? "*Tinggi terpindai (" + formatHeight(currentScan.tinggi_m, unit) + ") merupakan segmen batang bawah. Biomassa pohon utuh dihitung menggunakan model allometri DBH Chave et al. (2005)."
+                              : "*Scanned height (" + formatHeight(currentScan.tinggi_m, unit) + ") represents the lower trunk segment. Whole-tree biomass is calculated using Chave et al. (2005) DBH allometry."}
+                          </span>
+                        </div>
+                      )}
                       {currentScan.dbh_equivalent_cm != null && (
                         <div className="pt-1 border-t border-dashed border-[#fafaf9] flex flex-col gap-0.5">
                           <div className="text-[#79716b] text-xs">

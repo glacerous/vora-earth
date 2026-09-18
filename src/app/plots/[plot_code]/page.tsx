@@ -1305,7 +1305,7 @@ export default function PlotDetailPage() {
                   </div>
                   <div className="bg-[#fafaf9] rounded-lg p-2.5 border border-[#e7e5e4] flex flex-col gap-0.5 select-none">
                     <span className="text-[10px] font-semibold text-[#79716b] uppercase tracking-wider block">
-                      {language === "id" ? "Rata-rata Tinggi" : "Avg Height"}
+                      {avgTinggi < 3.0 ? (language === "id" ? "Rata-rata Segmen" : "Avg Trunk Segment") : (language === "id" ? "Rata-rata Tinggi" : "Avg Height")}
                     </span>
                     <span className="text-base font-bold font-serif text-[#292524]">{avgTinggi.toFixed(1)} m</span>
                   </div>
@@ -1736,7 +1736,7 @@ export default function PlotDetailPage() {
                                 <span className="font-bold text-[#292524]">{selectedNode.dbh_cm.toFixed(1)} cm</span>
                               </div>
                               <div className="flex justify-between border-b border-[#fafaf9] pb-1">
-                                <span>{language === "id" ? "Tinggi:" : "Height:"}</span>
+                                <span>{selectedNode.tinggi_m < 3.0 ? (language === "id" ? "Segmen Batang:" : "Trunk Segment:") : (language === "id" ? "Tinggi:" : "Height:")}</span>
                                 <span className="font-bold text-[#292524]">{selectedNode.tinggi_m.toFixed(1)} m</span>
                               </div>
                               <div className="flex justify-between text-[#4e572c] font-semibold mt-0.5">
@@ -1916,7 +1916,7 @@ export default function PlotDetailPage() {
                                 <td className="py-3 px-3">
                                   <div className="flex flex-col gap-0.5">
                                     <span>DBH: <span className="font-semibold text-[#292524]">{scan.dbh_cm.toFixed(1)} cm</span></span>
-                                    <span>{language === "id" ? "Tinggi:" : "Height:"} <span className="font-semibold text-[#292524]">{scan.tinggi_m.toFixed(1)} m</span></span>
+                                    <span>{scan.tinggi_m < 3.0 ? (language === "id" ? "Segmen:" : "Trunk:") : (language === "id" ? "Tinggi:" : "Height:")} <span className="font-semibold text-[#292524]">{scan.tinggi_m.toFixed(1)} m</span></span>
                                   </div>
                                 </td>
                                 
@@ -2216,7 +2216,7 @@ export default function PlotDetailPage() {
                 <span className="text-sm font-bold text-stone-100 font-mono">{previewScan.dbh_cm.toFixed(1)} cm</span>
               </div>
               <div className="bg-[#24201e] rounded-lg p-2.5 border border-[#332e2b]">
-                <span className="text-[10px] uppercase font-mono text-stone-400 block">{language === "id" ? "Tinggi" : "Height"}</span>
+                <span className="text-[10px] uppercase font-mono text-stone-400 block">{previewScan.tinggi_m < 3.0 ? (language === "id" ? "Segmen Batang" : "Trunk Segment") : (language === "id" ? "Tinggi" : "Height")}</span>
                 <span className="text-sm font-bold text-stone-100 font-mono">{previewScan.tinggi_m.toFixed(1)} m</span>
               </div>
               <div className="bg-[#24201e] rounded-lg p-2.5 border border-[#332e2b]">
