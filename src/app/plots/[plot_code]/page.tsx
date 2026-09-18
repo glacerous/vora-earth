@@ -1446,15 +1446,11 @@ export default function PlotDetailPage() {
               >
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                   <div>
-                    <h3 className="font-bold text-xs text-[#79716b] uppercase tracking-widest">
-                      {spatialMode === "grid" 
-                        ? (language === "id" ? "Peta Grid Spasial Hutan" : "Forest Spatial Grid Map") 
-                        : (language === "id" ? "Peta Satelit Distribusi GPS" : "GPS Satellite Distribution Map")}
+                    <h3 className="font-bold text-xs text-[#79716b] uppercase tracking-wider">
+                      {language === "id" ? "Peta Grid Spasial Hutan" : "Forest Spatial Grid Map"}
                     </h3>
-                    <p className="text-[11px] text-[#79716b] mt-0.5">
-                      {spatialMode === "grid" 
-                        ? (language === "id" ? "Geser node 48x48px (2x2 kotak) untuk memposisikan letak pohon sebenarnya" : "Drag 48x48px nodes (2x2 cells) to position the actual tree location") 
-                        : (language === "id" ? "Menampilkan distribusi geografis koordinat GPS pohon pada peta" : "Displays the geographical distribution of actual tree GPS coordinates on the map")}
+                    <p className="text-xs text-[#79716b] mt-0.5">
+                      {language === "id" ? "Geser & atur posisi pohon (sel 2x2) dan tandai area kanopi" : "Position tree nodes (2x2 cells) and mark canopy boundaries"}
                     </p>
                   </div>
 
