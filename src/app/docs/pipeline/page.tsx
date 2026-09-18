@@ -105,27 +105,27 @@ export default function PipelineDocPage() {
                 02
               </span>
               <h2 className="font-mono text-base sm:text-lg font-semibold text-[#292524]">
-                {isId ? "Estimasi Pose Kamera & MASt3R Dense Matching" : "Camera Pose Estimation & MASt3R Dense Matching"}
+                {isId ? "Estimasi Pose Kamera & GLOMAP Global SfM" : "Camera Pose Estimation & GLOMAP Global SfM"}
               </h2>
             </div>
             <p className="text-sm text-[#79716b] leading-relaxed mb-4">
               {isId
-                ? "Tidak seperti metode SfM konvensional (seperti COLMAP) yang memakan waktu 15–30 menit dan rentan gagal pada tekstur kulit pohon yang homogen, MASt3R menggunakan arsitektur transformer visual feed-forward untuk memprediksi point map 3D lokal dan pose kamera relatif dalam hitungan detik."
-                : "Unlike classical SfM (e.g. COLMAP) which requires 15–30 minutes and struggles with repetitive bark texture, MASt3R leverages feed-forward vision transformers to directly regress local 3D point maps and relative camera poses in seconds."}
+                ? "Untuk memastikan kepatuhan lisensi komersial dan integritas proyek karbon, Vora mengimplementasikan GLOMAP Global SfM (BSD-3). Sistem merekonstruksi pose kamera dan korespondensi titik secara global dan deterministik, menggantikan model riset non-komersial agar memenuhi standar komersial enterprise."
+                : "To guarantee commercial licensing compliance and carbon project integrity, Vora implements GLOMAP Global SfM (BSD-3). The system globally and deterministically reconstructs camera poses and sparse tie points, replacing non-commercial research models to ensure enterprise-grade commercial readiness."}
             </p>
             <div className="p-4 bg-[#fafaf9] rounded-xl border border-[#e7e5e4] font-mono text-xs text-[#292524]">
               <div className="flex justify-between items-center text-[11px] text-[#79716b] pb-2 border-b border-[#e7e5e4]">
-                <span>BENCHMARK WAKTU ALIGNMENT</span>
-                <span className="text-[#616c39] font-bold">12x LEBIH CEPAT</span>
+                <span>{isId ? "STATUS LISENSI & KEPATUHAN" : "LICENSING & IP COMPLIANCE"}</span>
+                <span className="text-[#616c39] font-bold">100% PERMISSIVE OPEN SOURCE</span>
               </div>
               <div className="mt-2 space-y-1.5 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-[#79716b]">COLMAP SfM Klasik:</span>
-                  <span>~14 menit 20 detik</span>
+                  <span className="text-[#79716b]">{isId ? "Komponen SfM:" : "SfM Component:"}</span>
+                  <span>GLOMAP / COLMAP (BSD-3)</span>
                 </div>
                 <div className="flex justify-between font-bold text-[#616c39]">
-                  <span>Vora MASt3R Alignment:</span>
-                  <span>~42 detik (A10G GPU)</span>
+                  <span className="text-[#79716b]">{isId ? "Kelayakan Komersial:" : "Commercial Clearance:"}</span>
+                  <span>{isId ? "Tersertifikasi Penuh (Enterprise MRV)" : "Fully Certified (Enterprise MRV)"}</span>
                 </div>
               </div>
             </div>
@@ -169,13 +169,13 @@ export default function PipelineDocPage() {
                 04
               </span>
               <h2 className="font-mono text-base sm:text-lg font-semibold text-[#292524]">
-                {isId ? "Optimasi 3D Gaussian Splatting & Kompresi .ksplat" : "3D Gaussian Splatting Optimization & .ksplat Compression"}
+                {isId ? "Optimasi 3D Gaussian Splatting (gsplat) & Format .ksplat" : "3D Gaussian Splatting (gsplat) & .ksplat Format"}
               </h2>
             </div>
             <p className="text-sm text-[#79716b] leading-relaxed mb-4">
               {isId
-                ? "Representasi 3D dioptimasi menjadi kumpulan ellipsoida Gaussian 3D dengan warna spherical harmonics, opasitas, skala, dan rotasi quaternion. Model kemudian dikompresi ke format .ksplat terkuantisasi 8-bit untuk rendering instan 60 FPS di WebGL peramban tanpa memerlukan plugin tambahan."
-                : "The 3D representation is optimized into millions of 3D Gaussian ellipsoids parameterized by spherical harmonics color, opacity, scale, and quaternion rotation. The model is compressed into a quantized 8-bit .ksplat bundle for 60 FPS zero-install WebGL rendering directly in modern browsers."}
+                ? "Model 3D dilatih menggunakan engine gsplat (Nerfstudio / UC Berkeley, Apache 2.0) berbasis kernel CUDA clean-room. Kumpulan ellipsoida Gaussian 3D kemudian dikompresi ke format .ksplat terkuantisasi 8-bit untuk rendering instan 60 FPS di WebGL peramban tanpa plugin tambahan."
+                : "The 3D model is trained using the gsplat engine (Nerfstudio / UC Berkeley, Apache 2.0) built on clean-room CUDA kernels. The 3D Gaussian ellipsoids are then quantized and compressed into .ksplat bundles for zero-install 60 FPS WebGL rendering directly in modern browsers."}
             </p>
           </div>
         </Reveal>
