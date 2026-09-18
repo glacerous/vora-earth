@@ -2373,6 +2373,45 @@ function ReconstructContent() {
                     {loading ? (language === "id" ? "Memproses Unggahan..." : "Processing Upload...") : (language === "id" ? "Unggah & Rekonstruksi" : "Upload & Reconstruct")}
                   </button>
                 </form>
+
+                {/* 1-Click Interactive Demo Scans for Hackathon Evaluators */}
+                <div className="mt-6 pt-5 border-t border-[#e7e5e4]">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-[10px] font-bold font-mono uppercase tracking-wider text-[#79716b]">
+                      {language === "id" ? "Sampel Digital Twin 3D Siap Pakai" : "Instant 3D Digital Twin Samples"}
+                    </span>
+                    <span className="text-[9px] font-mono text-[#616c39] bg-[#616c39]/10 px-2 py-0.5 rounded font-semibold">
+                      {language === "id" ? "Demo 1-Klik" : "1-Click Demo"}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <Link
+                      href="/reconstruct?code=POHON-7876&phase=result"
+                      className="p-3 rounded-xl border border-[#e7e5e4] hover:border-[#616c39] bg-[#fafaf9] hover:bg-white transition-all text-left group shadow-xs"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs font-bold text-[#292524] group-hover:text-[#616c39]">POHON-7876</span>
+                        <span className="text-[10px] font-mono font-semibold text-[#616c39] bg-[#616c39]/15 px-1.5 py-0.5 rounded">256 kg CO₂e</span>
+                      </div>
+                      <span className="text-[11px] text-[#79716b] mt-1 block">
+                        19.2 cm DBH · <i>Swietenia mahagoni</i>
+                      </span>
+                    </Link>
+
+                    <Link
+                      href="/reconstruct?code=POHON-1090&phase=result"
+                      className="p-3 rounded-xl border border-[#e7e5e4] hover:border-[#616c39] bg-[#fafaf9] hover:bg-white transition-all text-left group shadow-xs"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs font-bold text-[#292524] group-hover:text-[#616c39]">POHON-1090</span>
+                        <span className="text-[10px] font-mono font-semibold text-[#616c39] bg-[#616c39]/15 px-1.5 py-0.5 rounded">101 kg CO₂e</span>
+                      </div>
+                      <span className="text-[11px] text-[#79716b] mt-1 block">
+                        10.9 cm DBH · <i>Samanea saman</i>
+                      </span>
+                    </Link>
+                  </div>
+                </div>
               </div>
             </>
           )}
