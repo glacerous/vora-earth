@@ -324,7 +324,7 @@ export const translations: Record<string, { id: string; en: string }> = {
   },
 
   // ── Footer ──────────────────────────────────────────────────────────────
-  "footer.rights": { id: "© 2026 Vora. Seluruh hak cipta dilindungi.", en: "© 2026 Vora. All rights reserved." },
+  "footer.rights": { id: "© 2026 Vora Earth. Seluruh hak cipta dilindungi.", en: "© 2026 Vora Earth. All rights reserved." },
   "footer.home": { id: "Beranda", en: "Home" },
   "footer.newScan": { id: "Scan Baru", en: "New Scan" },
   "footer.gallery": { id: "Galeri", en: "Gallery" },

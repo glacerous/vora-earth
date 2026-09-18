@@ -30,7 +30,7 @@ const loraSerif = Lora({
 
 export const metadata: Metadata = {
   title: "Vora — Measure Forest Carbon",
-  description: "3D Gaussian Splatting and carbon metrics estimation for environmental conservation.",
+  description: "Volumetric 3D Gaussian Splatting and precision allometric carbon MRV for smallholder agroforestry.",
 };
 
 export default function RootLayout({

@@ -693,7 +693,7 @@ export default function Home() {
       <footer className="border-t border-[#e7e5e4] bg-[#fafaf9] py-12 px-6 sm:px-8">
         <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-6 text-xs text-[#79716b]">
           <div className="flex items-center gap-3">
-            <span className="font-mono font-semibold text-[#292524] tracking-tight">VORA</span>
+            <span className="font-mono font-semibold text-[#292524] tracking-tight">VORA EARTH</span>
             <span>&middot;</span>
             <p>{t("footer.rights")}</p>
           </div>
