@@ -17,18 +17,30 @@ export default function Navbar() {
       <div className="w-full max-w-[1200px] mx-auto px-6 sm:px-8 flex items-center justify-between relative">
         
         {/* Left: Brand Logo & Wordmark */}
-        <Link href="/" className="flex items-center gap-2 shrink-0 group">
+        <Link href="/" className="flex items-center gap-2 shrink-0 group" title="Vora Earth">
           <Image
             src="/logo-wordmark.png"
-            alt="Vora Earth Logo"
+            alt="Vora Earth"
             width={120}
             height={32}
             priority
             className="h-4.5 sm:h-5.5 w-auto object-contain transition-transform group-hover:scale-105"
           />
-          <span className="font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-[#616c39] bg-[#616c39]/10 px-1.5 py-0.5 rounded border border-[#616c39]/20">
-            Earth
-          </span>
+          <svg
+            className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#616c39] transition-transform duration-500 group-hover:rotate-12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M21.54 15H17a2 2 0 0 0-2 2v4.54" />
+            <path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17" />
+            <path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05" />
+          </svg>
         </Link>
 
         {/* Center links (Desktop-only) */}
