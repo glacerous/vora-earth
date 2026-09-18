@@ -97,6 +97,7 @@ export default function PlotDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
   const [exportDropdownOpen, setExportDropdownOpen] = useState(false);
+  const [carbonPricePerTon, setCarbonPricePerTon] = useState<number>(25);
 
   // State for custom delete confirmation modal
   const [treeToRemove, setTreeToRemove] = useState<string | null>(null);
@@ -1254,6 +1255,104 @@ export default function PlotDetailPage() {
                     </div>
                   )}
                 </div>
+              </section>
+
+              {/* Card: Earth Forward - Smallholder Carbon Yield & MRV Economics */}
+              <section className="bg-gradient-to-br from-white via-white to-emerald-50/30 border border-emerald-600/20 rounded-xl p-4.5 shadow-sm flex flex-col gap-3.5 select-none relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
+                <div className="flex justify-between items-center border-b border-emerald-100/60 pb-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <h3 className="font-bold text-[10px] text-emerald-800 uppercase tracking-widest">
+                      {language === "id" ? "Ekonomi Karbon Petani Kecil" : "Smallholder Carbon Economics"}
+                    </h3>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-200/50">
+                    Earth Forward
+                  </span>
+                </div>
+
+                {/* Live Carbon Yield Calculation */}
+                {(() => {
+                  const plotCo2eTons = totalCo2e / 1000.0;
+                  const grossRevenueUsd = plotCo2eTons * carbonPricePerTon;
+                  const voraCostPerTreeUsd = 0.236;
+                  const manualCostPerPlotUsd = scans.length > 0 ? Math.max(300, scans.length * 5.0) : 300;
+                  const voraTotalCostUsd = scans.length * voraCostPerTreeUsd;
+                  const netRevenueUsd = Math.max(0, grossRevenueUsd - voraTotalCostUsd);
+                  const savingsPct = manualCostPerPlotUsd > 0 ? Math.round(((manualCostPerPlotUsd - voraTotalCostUsd) / manualCostPerPlotUsd) * 100) : 95;
+
+                  return (
+                    <div className="flex flex-col gap-3">
+                      <div className="grid grid-cols-2 gap-3 bg-white/80 border border-emerald-100 rounded-lg p-2.5 shadow-2xs">
+                        <div>
+                          <span className="text-[9px] font-semibold text-[#79716b] uppercase tracking-wider block">
+                            {language === "id" ? "Total Karbon Plot" : "Total Sequestered"}
+                          </span>
+                          <span className="font-serif text-lg font-bold text-[#292524]">
+                            {plotCo2eTons.toFixed(2)} <span className="text-xs font-sans text-[#79716b] font-medium">t CO₂e</span>
+                          </span>
+                        </div>
+                        <div className="border-l border-emerald-100 pl-2.5">
+                          <span className="text-[9px] font-semibold text-[#79716b] uppercase tracking-wider block">
+                            {language === "id" ? "Estimasi Nilai Kredit" : "Est. Credit Yield"}
+                          </span>
+                          <span className="font-serif text-lg font-bold text-emerald-700">
+                            ${grossRevenueUsd.toFixed(2)}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col gap-1.5 px-0.5">
+                        <div className="flex justify-between items-center text-[10px]">
+                          <span className="text-[#79716b] font-medium">
+                            {language === "id" ? "Harga Pasar Karbon Sukarela" : "Voluntary Carbon Price"}:
+                          </span>
+                          <span className="font-mono font-bold text-[#292524]">${carbonPricePerTon}/t CO₂e</span>
+                        </div>
+                        <input
+                          type="range"
+                          min="10"
+                          max="60"
+                          step="5"
+                          value={carbonPricePerTon}
+                          onChange={(e) => setCarbonPricePerTon(Number(e.target.value))}
+                          className="w-full accent-emerald-600 cursor-pointer h-1.5 bg-emerald-100 rounded-lg"
+                        />
+                        <div className="flex justify-between text-[8px] text-[#79716b] font-mono">
+                          <span>$10 (Floor)</span>
+                          <span>$25 (Gold Standard)</span>
+                          <span>$60 (Agroforestry Premium)</span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col gap-1.5 bg-white/90 border border-[#e7e5e4] rounded-lg p-2.5 text-[10px]">
+                        <div className="flex justify-between items-center text-[#79716b]">
+                          <span>{language === "id" ? "Biaya Survei Manual Tradisional" : "Traditional Manual Survey"}:</span>
+                          <span className="line-through text-red-500 font-mono">${manualCostPerPlotUsd.toFixed(0)}</span>
+                        </div>
+                        <div className="flex justify-between items-center font-bold text-emerald-800">
+                          <span>{language === "id" ? "Biaya Verifikasi Digital Vora" : "Vora Digital MRV Cost"}:</span>
+                          <span className="font-mono text-emerald-700">${voraTotalCostUsd.toFixed(2)} ({savingsPct}% hemat)</span>
+                        </div>
+                        <div className="border-t border-[#e7e5e4] pt-1.5 mt-0.5 flex justify-between items-baseline">
+                          <span className="font-bold text-[#292524]">
+                            {language === "id" ? "Pendapatan Bersih Petani" : "Net Farmer Revenue"}:
+                          </span>
+                          <span className="font-serif text-sm font-bold text-emerald-700">
+                            ${netRevenueUsd.toFixed(2)}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="text-[9px] text-[#79716b] leading-relaxed italic">
+                        {language === "id"
+                          ? "Dengan memangkas biaya MRV hingga 95%, Vora memungkinkan petani swadaya (0.5–2 ha) memperoleh keuntungan langsung dari pasar karbon sukarela."
+                          : "By reducing MRV verification costs by 95%, Vora unlocks voluntary carbon credit margins for smallholder farmers (0.5–2 ha)."}
+                      </div>
+                    </div>
+                  );
+                })()}
               </section>
 
               {/* Card 2: Distribusi Spesies (Fleet Distribution By Type) */}
