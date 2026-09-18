@@ -1031,7 +1031,7 @@ export default function PlotDetailPage() {
 
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5">
-                <span className={`text-[9px] uppercase px-2 py-0.5 rounded border font-bold ${
+                <span className={`text-xs uppercase px-2.5 py-0.5 rounded-md border font-semibold ${
                   plot?.privacy === "public"
                     ? "bg-sky-50 text-sky-700 border-sky-100"
                     : "bg-[#fafaf9] text-[#79716b] border-[#e7e5e4]"
@@ -1069,7 +1069,7 @@ export default function PlotDetailPage() {
                       onClick={() => setExportDropdownOpen(false)} 
                     />
                     <div className="absolute right-0 mt-1.5 w-52 rounded-xl bg-white border border-[#e7e5e4]/80 shadow-lg py-1.5 z-50 animate-fadeIn text-xs">
-                      <div className="px-3 py-1 text-[9px] font-bold text-[#79716b] uppercase tracking-wider border-b border-[#fafaf9] pb-1">
+                      <div className="px-3 py-1 text-xs font-bold text-[#79716b] uppercase tracking-wider border-b border-[#fafaf9] pb-1">
                         Format
                       </div>
                       <button
@@ -1092,7 +1092,7 @@ export default function PlotDetailPage() {
                         <span className="font-semibold text-[#616c39] font-mono text-[10px] w-6">XLSX</span>
                         <span>Excel Spreadsheet</span>
                       </button>
-                      <div className="border-t border-[#fafaf9] mt-1 px-3 py-2 text-[9px] text-[#79716b] leading-relaxed font-medium">
+                      <div className="border-t border-[#fafaf9] mt-1 px-3 py-2 text-xs text-[#79716b] leading-relaxed font-medium">
                         {language === "id" ? "Data terstruktur yang siap menjadi lampiran pendukung pendaftaran proyek karbon di SRN PPI atau dokumentasi kredit karbon." : "Structured data suitable as a supporting attachment when registering a carbon project in SRN PPI or for carbon credit documentation."}
                       </div>
                     </div>
@@ -1122,23 +1122,23 @@ export default function PlotDetailPage() {
               {/* Card 1: Plot Profile & Carbon Target Gauge (Unified Left Dashboard Header) */}
               <section className="bg-white border border-[#e7e5e4]/80 rounded-xl p-5 shadow-sm flex flex-col items-center justify-center">
                 <div className="w-full border-b border-[#fafaf9] pb-3.5 mb-4 flex flex-col gap-1 text-left select-none">
-                  <span className="text-[9px] font-mono text-[#616c39] font-bold block mb-0.5">{plot?.plot_code}</span>
-                  <h1 className="text-lg font-bold tracking-tight text-[#292524] font-serif leading-tight">{plot?.name}</h1>
-                  <p className="text-[10px] text-[#79716b] leading-normal line-clamp-3 mt-1.5">{plot?.description || (language === "id" ? "Tidak ada deskripsi lokasi." : "No location description.")}</p>
-                  <span className="text-[9px] text-[#79716b] mt-2 block font-medium">
-                    {language === "id" ? "Oleh" : "By"} <span className="text-[#79716b] font-semibold">{plot?.owner.display_name}</span> &bull; {plot && new Date(plot.created_at).toLocaleDateString(language === "id" ? "id-ID" : "en-US", { day: "numeric", month: "short", year: "numeric" })}
+                  <span className="text-xs font-mono text-[#616c39] font-semibold block mb-1">{plot?.plot_code}</span>
+                  <h1 className="text-xl font-bold tracking-tight text-[#292524] font-serif leading-snug">{plot?.name}</h1>
+                  <p className="text-xs text-[#79716b] leading-relaxed line-clamp-2 mt-1.5">{plot?.description || (language === "id" ? "Tidak ada deskripsi lokasi." : "No location description.")}</p>
+                  <span className="text-xs text-[#79716b] mt-2 block">
+                    {language === "id" ? "Oleh" : "By"} <span className="text-[#292524] font-semibold">{plot?.owner.display_name}</span> &bull; {plot && new Date(plot.created_at).toLocaleDateString(language === "id" ? "id-ID" : "en-US", { day: "numeric", month: "short", year: "numeric" })}
                   </span>
                 </div>
 
                 {plot?.target_co2e_kg && plot.target_co2e_kg > 0 ? (
                   <>
-                    <h3 className="font-bold text-[10px] text-[#79716b] uppercase tracking-widest self-start mb-1 select-none">
+                    <h3 className="font-bold text-xs text-[#79716b] uppercase tracking-wider self-start mb-1 select-none">
                       {language === "id" ? "Progres Target Karbon" : "Carbon Target Progress"}
                     </h3>
                     
                     {/* Curved SVG Gauge */}
-                    <div className="relative flex flex-col items-center justify-center py-3 select-none">
-                      <svg className="w-40 h-22" viewBox="0 0 100 60">
+                    <div className="relative flex flex-col items-center justify-center py-2 select-none">
+                      <svg className="w-44 h-24" viewBox="0 0 100 60">
                         <path
                           d="M 10 50 A 40 40 0 0 1 90 50"
                           fill="none"
@@ -1164,8 +1164,8 @@ export default function PlotDetailPage() {
                         </defs>
                       </svg>
                       <div className="absolute bottom-1 text-center">
-                        <span className="text-xl font-semibold text-[#292524]">{Math.round(Math.min(totalCo2e / plot.target_co2e_kg, 1) * 100)}%</span>
-                        <span className="text-[9px] text-[#79716b] block font-medium mt-0.5">
+                        <span className="text-2xl font-bold text-[#292524]">{Math.round(Math.min(totalCo2e / plot.target_co2e_kg, 1) * 100)}%</span>
+                        <span className="text-xs text-[#79716b] block font-medium mt-0.5">
                           {language === "id" ? "dari target" : "of target"} {plot.target_co2e_kg >= 1000 ? `${(plot.target_co2e_kg / 1000).toFixed(0)}k` : plot.target_co2e_kg} kg
                         </span>
                       </div>
@@ -1176,19 +1176,19 @@ export default function PlotDetailPage() {
                 <div className="w-full border-t border-[#fafaf9] pt-3 mt-1.5 select-none flex flex-col gap-3">
                   <div className="grid grid-cols-2 gap-4 text-center items-start">
                     <div className="border-r border-[#fafaf9] pr-2">
-                      <span className="text-[10px] font-semibold uppercase tracking-wider text-[#79716b] block mb-0.5">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#79716b] block mb-1">
                         {language === "id" ? "Total Estimasi CO₂e" : "Total Estimated CO₂e"}
                       </span>
-                      <h2 className="font-serif text-2xl font-normal text-[#292524] tracking-tight">
+                      <h2 className="font-serif text-2xl font-bold text-[#292524] tracking-tight">
                         {totalCo2e.toLocaleString(language === "id" ? "id-ID" : "en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}{" "}
-                        <span className="text-xs font-sans text-[#79716b] font-medium">kg</span>
+                        <span className="text-sm font-sans text-[#79716b] font-medium">kg</span>
                       </h2>
                       <div className="mt-2 flex justify-center gap-1.5">
-                        <span className="text-[9px] font-bold text-[#79716b] bg-[#fafaf9] border border-[#e7e5e4] px-2 py-0.5 rounded-md">
+                        <span className="text-xs font-semibold text-[#79716b] bg-[#fafaf9] border border-[#e7e5e4] px-2.5 py-1 rounded-md">
                           {language === "id" ? "Pohon" : "Trees"}: {scans.length}
                         </span>
                         {aggregation && (
-                          <span className="text-[9px] font-bold text-[#79716b] bg-[#fafaf9] border border-[#e7e5e4] px-2 py-0.5 rounded-md">
+                          <span className="text-xs font-semibold text-[#79716b] bg-[#fafaf9] border border-[#e7e5e4] px-2.5 py-1 rounded-md">
                             &plusmn;{aggregation.combined_uncertainty_pct.toFixed(1)}%
                           </span>
                         )}
@@ -1196,17 +1196,17 @@ export default function PlotDetailPage() {
                     </div>
 
                     <div className="pl-2 flex flex-col items-center justify-center min-h-[64px] w-full">
-                      <span className="text-[10px] font-semibold uppercase tracking-wider text-[#79716b] block mb-0.5">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#79716b] block mb-1">
                         {language === "id" ? "Kerapatan Karbon" : "Carbon Density"}
                       </span>
                       {hasBounds && plotAreas.length === 1 ? (
                         <>
-                          <h2 className="font-serif text-2xl font-normal text-[#292524] tracking-tight">
+                          <h2 className="font-serif text-2xl font-bold text-[#292524] tracking-tight">
                             {areaStats[0].density.toLocaleString(language === "id" ? "id-ID" : "en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" "}
-                            <span className="text-xs font-sans text-[#79716b] font-medium font-bold">t/ha</span>
+                            <span className="text-sm font-sans text-[#79716b] font-medium font-bold">t/ha</span>
                           </h2>
                           <div className="mt-2 flex justify-center gap-1.5">
-                            <span className="text-[9px] font-bold text-[#79716b] bg-[#fafaf9] border border-[#e7e5e4] px-2 py-0.5 rounded-md">
+                            <span className="text-xs font-semibold text-[#79716b] bg-[#fafaf9] border border-[#e7e5e4] px-2.5 py-1 rounded-md">
                               {language === "id" ? "Area" : "Area"}: {areaStats[0].ha.toFixed(3)} ha
                             </span>
                           </div>
@@ -1219,7 +1219,7 @@ export default function PlotDetailPage() {
                               <div 
                                 key={idx} 
                                 onClick={() => setSelectedAreaIndex(idx)}
-                                className={`flex justify-between items-center px-2.5 py-1.5 rounded-lg text-[10px] cursor-pointer transition-all border ${
+                                className={`flex justify-between items-center px-2.5 py-1.5 rounded-lg text-xs cursor-pointer transition-all border ${
                                   isActive 
                                     ? "bg-[#616c39]/10 border-[#616c39]/30 text-[#4e572c] font-semibold shadow-xs" 
                                     : "bg-[#fafaf9]/50 border-[#fafaf9] text-[#79716b] hover:bg-[#fafaf9]"
@@ -1228,22 +1228,22 @@ export default function PlotDetailPage() {
                                 <span className="truncate max-w-[50%]">{stat.name}</span>
                                 <div className="text-right">
                                   <span className="font-serif font-bold text-[#292524]">{stat.density.toLocaleString(language === "id" ? "id-ID" : "en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} t/ha</span>
-                                  <span className="text-[8px] text-[#79716b] block">({stat.ha.toFixed(3)} ha)</span>
+                                  <span className="text-xs text-[#79716b] block">({stat.ha.toFixed(3)} ha)</span>
                                 </div>
                               </div>
                             );
                           })}
                         </div>
                       ) : (
-                        <p className="text-[9px] text-[#79716b] font-medium italic text-center leading-normal max-w-[150px] mt-1">
-                          {language === "id" ? "Tandai area plot untuk melihat kerapatan karbon per hektar" : "Draw plot area to view carbon density per hectare"}
+                        <p className="text-xs text-[#a8a29e] italic text-center leading-normal max-w-[160px] mt-1">
+                          {language === "id" ? "Tandai area plot untuk kalkulasi kerapatan" : "Mark plot area to calculate carbon density"}
                         </p>
                       )}
                     </div>
                   </div>
 
                   {hasBounds && treesOutsideCount > 0 && (
-                    <div className="flex items-center gap-2 text-amber-600 bg-amber-50 border border-amber-200/50 p-2 rounded-lg text-[9px] leading-normal font-semibold text-left">
+                    <div className="flex items-center gap-2 text-amber-600 bg-amber-50 border border-amber-200/50 p-2.5 rounded-lg text-xs leading-normal font-medium text-left">
                       <svg className="w-4.5 h-4.5 shrink-0 text-amber-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                       </svg>
@@ -1258,16 +1258,16 @@ export default function PlotDetailPage() {
               </section>
 
               {/* Card: Earth Forward - Smallholder Carbon Yield & MRV Economics */}
-              <section className="bg-gradient-to-br from-white via-white to-emerald-50/30 border border-emerald-600/20 rounded-xl p-4.5 shadow-sm flex flex-col gap-3.5 select-none relative overflow-hidden">
+              <section className="bg-gradient-to-br from-white via-white to-emerald-50/30 border border-emerald-600/20 rounded-xl p-5 shadow-sm flex flex-col gap-3.5 select-none relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
-                <div className="flex justify-between items-center border-b border-emerald-100/60 pb-2">
-                  <div className="flex items-center gap-1.5">
+                <div className="flex justify-between items-center border-b border-emerald-100/60 pb-2.5">
+                  <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <h3 className="font-bold text-[10px] text-emerald-800 uppercase tracking-widest">
+                    <h3 className="font-bold text-xs text-emerald-800 uppercase tracking-wider">
                       {language === "id" ? "Ekonomi Karbon Petani Kecil" : "Smallholder Carbon Economics"}
                     </h3>
                   </div>
-                  <span className="text-[9px] font-mono font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-200/50">
+                  <span className="text-xs font-mono font-bold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-200/50">
                     Earth Forward
                   </span>
                 </div>
@@ -1280,33 +1280,32 @@ export default function PlotDetailPage() {
                   const manualCostPerPlotUsd = scans.length > 0 ? Math.max(300, scans.length * 5.0) : 300;
                   const voraTotalCostUsd = scans.length * voraCostPerTreeUsd;
                   const netRevenueUsd = Math.max(0, grossRevenueUsd - voraTotalCostUsd);
-                  const savingsPct = manualCostPerPlotUsd > 0 ? Math.round(((manualCostPerPlotUsd - voraTotalCostUsd) / manualCostPerPlotUsd) * 100) : 95;
 
                   return (
-                    <div className="flex flex-col gap-3">
-                      <div className="grid grid-cols-2 gap-3 bg-white/80 border border-emerald-100 rounded-lg p-2.5 shadow-2xs">
+                    <div className="flex flex-col gap-3.5">
+                      <div className="grid grid-cols-2 gap-3 bg-white/90 border border-emerald-100 rounded-lg p-3 shadow-2xs">
                         <div>
-                          <span className="text-[9px] font-semibold text-[#79716b] uppercase tracking-wider block">
-                            {language === "id" ? "Total Karbon Plot" : "Total Sequestered"}
+                          <span className="text-xs font-semibold text-[#79716b] uppercase tracking-wider block mb-0.5">
+                            {language === "id" ? "Total Karbon Plot" : "Total Stored"}
                           </span>
-                          <span className="font-serif text-lg font-bold text-[#292524]">
+                          <span className="font-serif text-xl font-bold text-[#292524]">
                             {plotCo2eTons.toFixed(2)} <span className="text-xs font-sans text-[#79716b] font-medium">t CO₂e</span>
                           </span>
                         </div>
-                        <div className="border-l border-emerald-100 pl-2.5">
-                          <span className="text-[9px] font-semibold text-[#79716b] uppercase tracking-wider block">
-                            {language === "id" ? "Estimasi Nilai Kredit" : "Est. Credit Yield"}
+                        <div className="border-l border-emerald-100 pl-3">
+                          <span className="text-xs font-semibold text-[#79716b] uppercase tracking-wider block mb-0.5">
+                            {language === "id" ? "Estimasi Nilai Kredit" : "Est. Credit Value"}
                           </span>
-                          <span className="font-serif text-lg font-bold text-emerald-700">
+                          <span className="font-serif text-xl font-bold text-emerald-700">
                             ${grossRevenueUsd.toFixed(2)}
                           </span>
                         </div>
                       </div>
 
                       <div className="flex flex-col gap-1.5 px-0.5">
-                        <div className="flex justify-between items-center text-[10px]">
+                        <div className="flex justify-between items-center text-xs">
                           <span className="text-[#79716b] font-medium">
-                            {language === "id" ? "Harga Pasar Karbon Sukarela" : "Voluntary Carbon Price"}:
+                            {language === "id" ? "Harga Pasar Karbon" : "Carbon Credit Price"}:
                           </span>
                           <span className="font-mono font-bold text-[#292524]">${carbonPricePerTon}/t CO₂e</span>
                         </div>
@@ -1317,38 +1316,32 @@ export default function PlotDetailPage() {
                           step="5"
                           value={carbonPricePerTon}
                           onChange={(e) => setCarbonPricePerTon(Number(e.target.value))}
-                          className="w-full accent-emerald-600 cursor-pointer h-1.5 bg-emerald-100 rounded-lg"
+                          className="w-full accent-emerald-600 cursor-pointer h-2 bg-emerald-100 rounded-lg"
                         />
-                        <div className="flex justify-between text-[8px] text-[#79716b] font-mono">
-                          <span>$10 (Floor)</span>
-                          <span>$25 (Gold Standard)</span>
-                          <span>$60 (Agroforestry Premium)</span>
+                        <div className="flex justify-between text-xs text-[#79716b] font-mono">
+                          <span>$10</span>
+                          <span>$25 Standard</span>
+                          <span>$60 Premium</span>
                         </div>
                       </div>
 
-                      <div className="flex flex-col gap-1.5 bg-white/90 border border-[#e7e5e4] rounded-lg p-2.5 text-[10px]">
+                      <div className="flex flex-col gap-2 bg-white/90 border border-[#e7e5e4] rounded-lg p-3 text-xs">
                         <div className="flex justify-between items-center text-[#79716b]">
-                          <span>{language === "id" ? "Biaya Survei Manual Tradisional" : "Traditional Manual Survey"}:</span>
-                          <span className="line-through text-red-500 font-mono">${manualCostPerPlotUsd.toFixed(0)}</span>
+                          <span>{language === "id" ? "Biaya Survei Tradisional" : "Traditional Manual Survey"}:</span>
+                          <span className="line-through text-red-500 font-mono font-medium">${manualCostPerPlotUsd.toFixed(0)}</span>
                         </div>
                         <div className="flex justify-between items-center font-bold text-emerald-800">
-                          <span>{language === "id" ? "Biaya Verifikasi Digital Vora" : "Vora Digital MRV Cost"}:</span>
-                          <span className="font-mono text-emerald-700">${voraTotalCostUsd.toFixed(2)} ({savingsPct}% hemat)</span>
+                          <span>{language === "id" ? "Biaya Digital Vora" : "Vora Digital MRV"}:</span>
+                          <span className="font-mono text-emerald-700">${voraTotalCostUsd.toFixed(2)} ({language === "id" ? "hemat 99%" : "99% savings"})</span>
                         </div>
-                        <div className="border-t border-[#e7e5e4] pt-1.5 mt-0.5 flex justify-between items-baseline">
+                        <div className="border-t border-[#e7e5e4] pt-2 mt-0.5 flex justify-between items-baseline">
                           <span className="font-bold text-[#292524]">
-                            {language === "id" ? "Pendapatan Bersih Petani" : "Net Farmer Revenue"}:
+                            {language === "id" ? "Pendapatan Petani" : "Net Farmer Return"}:
                           </span>
-                          <span className="font-serif text-sm font-bold text-emerald-700">
+                          <span className="font-serif text-lg font-bold text-emerald-700">
                             ${netRevenueUsd.toFixed(2)}
                           </span>
                         </div>
-                      </div>
-
-                      <div className="text-[9px] text-[#79716b] leading-relaxed italic">
-                        {language === "id"
-                          ? "Dengan memangkas biaya MRV hingga 95%, Vora memungkinkan petani swadaya (0.5–2 ha) memperoleh keuntungan langsung dari pasar karbon sukarela."
-                          : "By reducing MRV verification costs by 95%, Vora unlocks voluntary carbon credit margins for smallholder farmers (0.5–2 ha)."}
                       </div>
                     </div>
                   );
@@ -1356,40 +1349,35 @@ export default function PlotDetailPage() {
               </section>
 
               {/* Card 2: Distribusi Spesies (Fleet Distribution By Type) */}
-              <section className="bg-white border border-[#e7e5e4]/80 rounded-xl p-4.5 shadow-sm flex flex-col gap-3">
+              <section className="bg-white border border-[#e7e5e4]/80 rounded-xl p-5 shadow-sm flex flex-col gap-3.5">
                 <div className="flex justify-between items-center select-none border-b border-[#fafaf9] pb-2">
-                  <h3 className="font-bold text-[10px] text-[#79716b] uppercase tracking-widest">
+                  <h3 className="font-bold text-xs text-[#79716b] uppercase tracking-wider">
                     {language === "id" ? "Distribusi Spesies & Keanekaragaman Hayati" : "Species Distribution & Biodiversity"}
                   </h3>
                 </div>
 
                 {/* Shannon-Wiener Biodiversity Index Display */}
-                <div className="bg-[#fafaf9] border border-[#e7e5e4] rounded-xl p-3 flex flex-col gap-1.5 select-none">
+                <div className="bg-[#fafaf9] border border-[#e7e5e4] rounded-xl p-3.5 flex flex-col gap-2 select-none">
                   <div className="flex justify-between items-baseline">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#79716b]">Shannon-Wiener Index (H')</span>
-                    <span className="font-serif text-base font-bold text-[#292524]">{shannonIndex.toFixed(2)}</span>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[#79716b]">Shannon-Wiener Index (H')</span>
+                    <span className="font-serif text-xl font-bold text-[#292524]">{shannonIndex.toFixed(2)}</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className={`w-1.5 h-1.5 rounded-full ${shannonIndex < 1.5 ? "bg-amber-505" : shannonIndex <= 3.0 ? "bg-[#4e572c]" : "bg-sky-550"}`} />
+                  <div className="flex items-center gap-2">
+                    <span className={`w-2 h-2 rounded-full ${shannonIndex < 1.5 ? "bg-amber-500" : shannonIndex <= 3.0 ? "bg-[#4e572c]" : "bg-sky-500"}`} />
                     <span className="text-xs font-bold text-[#292524]">{diversityLevel}</span>
                   </div>
-                  <p className="text-[10px] text-[#79716b] leading-relaxed font-medium">
+                  <p className="text-xs text-[#79716b] leading-relaxed">
                     {diversityDesc}
                   </p>
-                  <div className="border-t border-[#e7e5e4] mt-1 pt-1.5 text-[9px] text-[#79716b] leading-relaxed italic font-medium">
-                    {language === "id"
-                      ? "Catatan: Hutan dengan keanekaragaman hayati lebih tinggi umumnya dihargai lebih tinggi di pasar karbon sukarela karena ketahanan ekologis dan manfaat lingkungan tambahan."
-                      : "Note: Higher biodiversity forests are generally associated with premium pricing in voluntary carbon markets due to ecological resilience and environmental co-benefits."}
-                  </div>
                 </div>
 
-                <h4 className="font-bold text-[9px] text-[#79716b] uppercase tracking-widest mt-1 select-none">
+                <h4 className="font-bold text-xs text-[#79716b] uppercase tracking-wider mt-1 select-none">
                   {language === "id" ? "Kontribusi per Spesies" : "Contribution per Species"}
                 </h4>
                 
                 <div data-lenis-prevent className="flex flex-col gap-3 max-h-[160px] overflow-y-auto pr-1">
                   {speciesList.length === 0 ? (
-                    <p className="text-xs text-[#79716b] italic py-4 text-center">
+                    <p className="text-xs text-[#79716b] italic py-3 text-center">
                       {language === "id" ? "Spesies belum terklasifikasi" : "Species not classified yet"}
                     </p>
                   ) : (
@@ -1399,17 +1387,17 @@ export default function PlotDetailPage() {
                       const specPct = totalCo2e > 0 ? (specCo2e / totalCo2e) * 100 : 0;
                       const color = getSpeciesColor(spec);
                       return (
-                        <div key={idx} className="flex flex-col gap-1">
+                        <div key={idx} className="flex flex-col gap-1.5">
                           <div className="flex justify-between items-center text-xs text-[#79716b] font-semibold capitalize">
                             <div className="flex items-center gap-1.5 truncate max-w-[80%]">
-                              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${color.bg.split(' ')[0]}`} />
-                              <span className="italic truncate">{spec}</span>
-                              <span className="text-[9px] text-[#79716b] font-normal shrink-0">({specScans.length} {language === "id" ? "pohon" : "trees"})</span>
+                              <span className={`w-2 h-2 rounded-full shrink-0 ${color.bg.split(' ')[0]}`} />
+                              <span className="italic truncate text-[#292524]">{spec}</span>
+                              <span className="text-xs text-[#79716b] font-normal shrink-0">({specScans.length} {language === "id" ? "pohon" : "trees"})</span>
                             </div>
                             <span className="font-bold text-[#292524] shrink-0">{specPct.toFixed(0)}%</span>
                           </div>
                           {/* Progress bar track */}
-                          <div className="h-1.5 w-full bg-[#fafaf9] rounded-full overflow-hidden border border-[#e7e5e4]/20">
+                          <div className="h-2 w-full bg-[#fafaf9] rounded-full overflow-hidden border border-[#e7e5e4]/30">
                             <div 
                               className={`h-full ${color.bg.split(' ')[0]} rounded-full transition-all duration-500`} 
                               style={{ width: `${specPct}%` }} 
@@ -1423,28 +1411,27 @@ export default function PlotDetailPage() {
               </section>
 
               {/* Card 3: Rata-rata & Visual Wave Dist (Fuel Usage & Cost) */}
-              <section className="bg-white border border-[#e7e5e4]/80 rounded-xl p-4.5 shadow-sm flex flex-col gap-3">
-                <h3 className="font-bold text-[10px] text-[#79716b] uppercase tracking-widest select-none">
-                  {language === "id" ? "Dimensi Rata-rata & Kerapatan DBH" : "Average Dimensions & DBH Distribution"}
+              <section className="bg-white border border-[#e7e5e4]/80 rounded-xl p-5 shadow-sm flex flex-col gap-3">
+                <h3 className="font-bold text-xs text-[#79716b] uppercase tracking-wider select-none">
+                  {language === "id" ? "Dimensi Rata-rata & DBH" : "Average Dimensions & DBH"}
                 </h3>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <span className="text-[9px] font-bold text-[#79716b] uppercase tracking-wider block select-none">
+                    <span className="text-xs font-semibold text-[#79716b] uppercase tracking-wider block select-none mb-0.5">
                       {language === "id" ? "Rata-rata DBH" : "Avg DBH"}
                     </span>
-                    <span className="text-lg font-bold font-serif text-[#292524]">{avgDbh.toFixed(1)} cm</span>
+                    <span className="text-xl font-bold font-serif text-[#292524]">{avgDbh.toFixed(1)} cm</span>
                   </div>
                   <div>
-                    <span className="text-[9px] font-bold text-[#79716b] uppercase tracking-wider block select-none">
+                    <span className="text-xs font-semibold text-[#79716b] uppercase tracking-wider block select-none mb-0.5">
                       {language === "id" ? "Rata-rata Tinggi" : "Avg Height"}
                     </span>
-                    <span className="text-lg font-bold font-serif text-[#292524]">{avgTinggi.toFixed(1)} m</span>
+                    <span className="text-xl font-bold font-serif text-[#292524]">{avgTinggi.toFixed(1)} m</span>
                   </div>
                 </div>
 
-                {/* Stylized density bar graph (wave simulation) - only if scans length >= 5 */}
-                {scans.length >= 5 ? (
+                {scans.length >= 5 && (
                   <div className="flex items-end justify-between h-12 bg-[#fafbfd] border border-[#e7e5e4] rounded-lg p-2.5 mt-0.5 select-none">
                     {[45, 60, 30, 80, 50, 75, 45, 90, 65, 35, 70, 55, 85, 30].map((h, i) => (
                       <div
@@ -1453,10 +1440,6 @@ export default function PlotDetailPage() {
                         className="w-1.5 bg-[#4e572c]/20 hover:bg-[#4e572c] rounded-full transition-all duration-300 cursor-pointer"
                       />
                     ))}
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center h-12 bg-[#fafbfd] border border-[#e7e5e4] rounded-lg p-2.5 mt-0.5 text-[10px] text-[#79716b] font-medium italic select-none text-center">
-                    {language === "id" ? "Memerlukan minimal 5 pohon untuk melihat distribusi DBH" : "Requires at least 5 trees to view DBH distribution"}
                   </div>
                 )}
               </section>
@@ -1520,7 +1503,7 @@ export default function PlotDetailPage() {
                           <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                         </svg>
                       </button>
-                      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-[9px] font-semibold px-2 py-1 rounded shadow-md whitespace-nowrap z-30">
+                      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
                         {language === "id" ? "Grid Spasial" : "Spatial Grid"}
                       </div>
                     </div>
@@ -1539,7 +1522,7 @@ export default function PlotDetailPage() {
                           <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.89-2.203a.75.75 0 00.407-.675V5.27a.75.75 0 00-1.08-.674L15 6.75 9 3.75 3.28 6.324A.75.75 0 003 7v11.75a.75.75 0 001.08.674L9 17.25l6 3m.503-.002L9 17.25m6 3l4.89-2.203a.75.75 0 00.407-.675V5.27a.75.75 0 00-1.08-.674L15 6.75" />
                         </svg>
                       </button>
-                      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-[9px] font-semibold px-2 py-1 rounded shadow-md whitespace-nowrap z-30">
+                      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
                         {language === "id" ? "Peta GPS" : "GPS Map"}
                       </div>
                     </div>
@@ -1563,7 +1546,7 @@ export default function PlotDetailPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
                           </svg>
                         </button>
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-[9px] font-semibold px-2 py-1 rounded shadow-md whitespace-nowrap z-30">
+                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
                           {language === "id" ? "Perbesar" : "Zoom In"} ({zoomLevel * 100}%)
                         </div>
                       </div>
@@ -1585,7 +1568,7 @@ export default function PlotDetailPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
                           </svg>
                         </button>
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-[9px] font-semibold px-2 py-1 rounded shadow-md whitespace-nowrap z-30">
+                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
                           {language === "id" ? "Perkecil" : "Zoom Out"} ({zoomLevel * 100}%)
                         </div>
                       </div>
@@ -1609,7 +1592,7 @@ export default function PlotDetailPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75v4.5m0-4.5h-4.5m4.5 0L15 9m5.25 11.25v-4.5m0 4.5h-4.5m4.5 0l-6-6" />
                           </svg>
                         </button>
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-[9px] font-semibold px-2 py-1 rounded shadow-md whitespace-nowrap z-30">
+                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
                           {isDrawingMode ? (language === "id" ? "Selesai Menandai" : "Finish Marking") : (language === "id" ? "Tandai Area Plot" : "Mark Plot Area")}
                         </div>
                       </div>
@@ -1631,7 +1614,7 @@ export default function PlotDetailPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                           </svg>
                         </button>
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-[9px] font-semibold px-2 py-1 rounded shadow-md whitespace-nowrap z-30">
+                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
                           {language === "id" ? "Hapus Semua Area" : "Clear All Areas"}
                         </div>
                       </div>
@@ -1997,7 +1980,7 @@ export default function PlotDetailPage() {
                       </div>
                       
                       {/* Explicit Scale Indicator Label (Anchored in place, never scales or scrolls) */}
-                      <div className="absolute bottom-5 right-5 bg-white/95 backdrop-blur-xs border border-[#e7e5e4] rounded px-2.5 py-1 text-[9px] font-bold text-[#79716b] shadow-sm select-none z-30 pointer-events-none flex items-center gap-1.5">
+                      <div className="absolute bottom-5 right-5 bg-white/95 backdrop-blur-xs border border-[#e7e5e4] rounded-lg px-3 py-1.5 text-xs font-medium text-[#79716b] shadow-sm select-none z-30 pointer-events-none flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#4e572c] animate-pulse" />
                         <span>{language === "id" ? "1 kotak grid = 2 meter" : "1 grid cell = 2 meters"}</span>
                       </div>
@@ -2069,7 +2052,7 @@ export default function PlotDetailPage() {
                 <div data-lenis-prevent className="w-full max-h-[380px] overflow-y-auto overflow-x-auto">
                   <table className="w-full border-collapse text-left text-xs text-[#79716b]">
                     <thead>
-                      <tr className="border-b border-[#fafaf9] text-[#79716b] font-bold uppercase tracking-wider text-[9px] select-none sticky top-0 bg-white z-10 shadow-xs">
+                      <tr className="border-b border-[#fafaf9] text-[#79716b] font-bold uppercase tracking-wider text-xs select-none sticky top-0 bg-white z-10 shadow-xs">
                         <th className="py-2.5 px-3">{language === "id" ? "Pohon" : "Tree"}</th>
                         <th className="py-2.5 px-3">{language === "id" ? "Klasifikasi Spesies" : "Species Classification"}</th>
                         <th className="py-2.5 px-3">{language === "id" ? "Metrik Fisik" : "Physical Metrics"}</th>
@@ -2116,7 +2099,7 @@ export default function PlotDetailPage() {
                                     )}
                                     <div>
                                       <span className="font-bold text-[#292524] block text-xs">{scan.tree_code}</span>
-                                      <span className="text-[10px] text-[#79716b] block font-mono">
+                                      <span className="text-xs text-[#79716b] block font-mono">
                                         {new Date(scan.scan_date).toLocaleDateString(language === "id" ? 'id-ID' : 'en-US', { day: 'numeric', month: 'short' })}
                                       </span>
                                     </div>
@@ -2126,10 +2109,10 @@ export default function PlotDetailPage() {
                                 <td className="py-3 px-3">
                                   {specName ? (
                                     <div className="flex flex-col">
-                                      <span className={`text-[10px] font-semibold ${specColor.text} capitalize`}>
+                                      <span className={`text-xs font-semibold ${specColor.text} capitalize`}>
                                         <i>{specName}</i>
                                       </span>
-                                      {specCommon && <span className="text-[9px] text-[#79716b]">{specCommon}</span>}
+                                      {specCommon && <span className="text-xs text-[#79716b]">{specCommon}</span>}
                                     </div>
                                   ) : (
                                     <span className="text-[#79716b] italic">
@@ -2389,7 +2372,7 @@ export default function PlotDetailPage() {
 
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-1.5">
-                <label className="text-[10px] uppercase tracking-wider font-bold text-[#79716b]">
+                <label className="text-xs uppercase tracking-wider font-semibold text-[#79716b]">
                   {language === "id" ? "Nama Plot" : "Plot Name"}
                 </label>
                 <input
@@ -2402,7 +2385,7 @@ export default function PlotDetailPage() {
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-[10px] uppercase tracking-wider font-bold text-[#79716b]">
+                <label className="text-xs uppercase tracking-wider font-semibold text-[#79716b]">
                   {language === "id" ? "Deskripsi" : "Description"}
                 </label>
                 <textarea
@@ -2414,7 +2397,7 @@ export default function PlotDetailPage() {
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-[10px] uppercase tracking-wider font-bold text-[#79716b]">
+                <label className="text-xs uppercase tracking-wider font-semibold text-[#79716b]">
                   {language === "id" ? "Privasi Plot" : "Plot Privacy"}
                 </label>
                 <div className="grid grid-cols-2 gap-3 mt-0.5">
@@ -2428,7 +2411,7 @@ export default function PlotDetailPage() {
                     }`}
                   >
                     <span className="text-xs font-semibold">{language === "id" ? "Privat" : "Private"}</span>
-                    <span className="text-[9px] text-center opacity-85 leading-none">{language === "id" ? "Hanya pemilik" : "Only the owner"}</span>
+                    <span className="text-xs text-center opacity-85 leading-none">{language === "id" ? "Hanya pemilik" : "Only the owner"}</span>
                   </button>
 
                   <button
@@ -2441,7 +2424,7 @@ export default function PlotDetailPage() {
                     }`}
                   >
                     <span className="text-xs font-semibold">{language === "id" ? "Publik" : "Public"}</span>
-                    <span className="text-[9px] text-center opacity-85 leading-none">{language === "id" ? "Terbuka untuk semua" : "Open to everyone"}</span>
+                    <span className="text-xs text-center opacity-85 leading-none">{language === "id" ? "Terbuka untuk semua" : "Open to everyone"}</span>
                   </button>
                 </div>
               </div>
