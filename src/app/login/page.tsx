@@ -34,12 +34,15 @@ function LoginForm() {
     setLoading(true);
 
     try {
+      const cleanUsername = username.trim().toLowerCase();
+      const cleanPassword = password.trim();
+
       const res = await fetch(BACKEND_URL + "/auth/token", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username: cleanUsername, password: cleanPassword }),
         credentials: "include",
       });
 
@@ -66,6 +69,7 @@ function LoginForm() {
   const fillDemoAccount = () => {
     setUsername("juri_demo");
     setPassword("demo123");
+    setError(null);
   };
 
   return (
