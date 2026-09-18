@@ -194,8 +194,8 @@ export const translations: Record<string, { id: string; en: string }> = {
   // ── Landing Page (Hero) ─────────────────────────────────────────────────
   "hero.title": { id: "Ukur karbon pohon.", en: "Measure forest carbon." },
   "hero.subtitle": {
-    id: "Rekonstruksi 3D Gaussian Splatting volumetrik dan estimasi karbon alometrik untuk konservasi lingkungan. Bangun model 3D pohon berdensitas tinggi, ukur DBH, dan verifikasi stok biomassa langsung dari peramban Anda.",
-    en: "Volumetric 3D Gaussian Splatting and allometric carbon estimation for environmental conservation. Reconstruct high-density tree models, measure DBH, and verify stored biomass from your browser.",
+    id: "Platform MRV presisi bertenaga 3D Gaussian Splatting volumetrik dan alometri karbon untuk agroforestri. Rekonstruksi pohon milimeter-akurat, ukur DBH sub-sentimeter, dan verifikasi stok biomassa langsung dari video ponsel.",
+    en: "Volumetric 3D Gaussian Splatting and precision allometric MRV for smallholder agroforestry. Reconstruct high-density 3D tree models, measure sub-centimeter DBH, and verify stored biomass directly from standard phone video.",
   },
   "hero.viewExample": { id: "Lihat Contoh Scan", en: "View Example Scan" },
   "hero.startAnalyzing": { id: "Mulai Analisis", en: "Start Analyzing" },

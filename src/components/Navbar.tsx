@@ -17,15 +17,18 @@ export default function Navbar() {
       <div className="w-full max-w-[1200px] mx-auto px-6 sm:px-8 flex items-center justify-between relative">
         
         {/* Left: Brand Logo & Wordmark */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
+        <Link href="/" className="flex items-center gap-2 shrink-0 group">
           <Image
             src="/logo-wordmark.png"
-            alt="Vora Logo"
+            alt="Vora Earth Logo"
             width={120}
             height={32}
             priority
             className="h-4.5 sm:h-5.5 w-auto object-contain transition-transform group-hover:scale-105"
           />
+          <span className="font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-[#616c39] bg-[#616c39]/10 px-1.5 py-0.5 rounded border border-[#616c39]/20">
+            Earth
+          </span>
         </Link>
 
         {/* Center links (Desktop-only) */}

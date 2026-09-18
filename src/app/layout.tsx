@@ -29,7 +29,7 @@ const loraSerif = Lora({
 });
 
 export const metadata: Metadata = {
-  title: "Vora — Measure Forest Carbon",
+  title: "Vora Earth — Precision Forest Carbon MRV",
   description: "Volumetric 3D Gaussian Splatting and precision allometric carbon MRV for smallholder agroforestry.",
 };
 
