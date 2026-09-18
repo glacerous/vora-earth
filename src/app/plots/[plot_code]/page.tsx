@@ -9,16 +9,7 @@ import { useAuth, useSettings, getAuthHeaders } from "@/components/AuthProvider"
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || "https://vora-52k9.onrender.com";
 
-// Dynamic load of Leaflet map (client-only)
-const PlotMap = dynamic(() => import("@/components/PlotMap"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full bg-[#fafaf9] border border-[#e7e5e4] rounded-xl flex items-center justify-center min-h-[250px]">
-      <Loader size={110} className="mr-2" />
-      <p className="text-xs text-[#79716b] font-medium">Loading satellite map...</p>
-    </div>
-  ),
-});
+// Leaflet map removed to focus 100% on Forest Spatial Grid
 
 interface Owner {
   username: string;
@@ -178,7 +169,7 @@ export default function PlotDetailPage() {
   }, [plot]);
 
   // Spatial display mode (grid canvas or Leaflet gps map)
-  const [spatialMode, setSpatialMode] = useState<"grid" | "gps">("grid");
+  // spatialMode removed
 
   // Fine-grid dimensions configurations (24px cells)
   const CELL_SIZE = 24;
@@ -1468,7 +1459,7 @@ export default function PlotDetailPage() {
                   </div>
 
                   {/* Passive Auto-save Indicator */}
-                  {isOwner && spatialMode === "grid" && saveStatus !== "idle" && (
+                  {isOwner && saveStatus !== "idle" && (
                     <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#e7e5e4] text-[10px] font-semibold transition-all select-none shadow-xs bg-white shrink-0">
                       {saveStatus === "saving" ? (
                         <>
@@ -1486,99 +1477,54 @@ export default function PlotDetailPage() {
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-3 items-stretch relative w-full">
-                  {/* Vertical Photoshop-style Sidebar */}
+                  {/* Vertical Photoshop-style Toolbar */}
                   <div className="flex flex-row md:flex-col gap-2 bg-[#fafaf9] border border-[#e7e5e4]/85 p-2 rounded-xl shadow-xs shrink-0 items-center justify-center md:justify-start w-full md:w-12 select-none z-20">
                     
-                    {/* Grid Mode Button */}
-                    <div className="relative group">
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setSpatialMode("grid"); }}
-                        className={`p-2 rounded-lg border transition-all cursor-pointer ${
-                          spatialMode === "grid" 
-                            ? "bg-[#292524] border-[#1c1917] text-white" 
-                            : "bg-white border-[#fafaf9] hover:bg-[#fafaf9]/50 text-[#79716b]"
-                        }`}
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-                        </svg>
-                      </button>
-                      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
-                        {language === "id" ? "Grid Spasial" : "Spatial Grid"}
-                      </div>
-                    </div>
-
-                    {/* GPS Mode Button */}
-                    <div className="relative group">
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setSpatialMode("gps"); }}
-                        className={`p-2 rounded-lg border transition-all cursor-pointer ${
-                          spatialMode === "gps" 
-                            ? "bg-[#292524] border-[#1c1917] text-white" 
-                            : "bg-white border-[#fafaf9] hover:bg-[#fafaf9]/50 text-[#79716b]"
-                        }`}
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.89-2.203a.75.75 0 00.407-.675V5.27a.75.75 0 00-1.08-.674L15 6.75 9 3.75 3.28 6.324A.75.75 0 003 7v11.75a.75.75 0 001.08.674L9 17.25l6 3m.503-.002L9 17.25m6 3l4.89-2.203a.75.75 0 00.407-.675V5.27a.75.75 0 00-1.08-.674L15 6.75" />
-                        </svg>
-                      </button>
-                      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
-                        {language === "id" ? "Peta GPS" : "GPS Map"}
-                      </div>
-                    </div>
-
-                    {/* Divider for Zoom */}
-                    {spatialMode === "grid" && <div className="w-full md:w-8 h-px bg-[#e7e5e4] my-0 md:my-1" />}
-
                     {/* Zoom In Button */}
-                    {spatialMode === "grid" && (
-                      <div className="relative group">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); zoomIn(); }}
-                          disabled={zoomLevel >= 1.25}
-                          className={`p-2 rounded-lg border transition-all cursor-pointer ${
-                            zoomLevel >= 1.25
-                              ? "bg-[#fafaf9] border-[#fafaf9] text-[#d6d3d1] cursor-not-allowed"
-                              : "bg-white border-[#e7e5e4] text-[#79716b] hover:bg-[#fafaf9]"
-                          }`}
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                          </svg>
-                        </button>
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
-                          {language === "id" ? "Perbesar" : "Zoom In"} ({zoomLevel * 100}%)
-                        </div>
+                    <div className="relative group">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); zoomIn(); }}
+                        disabled={zoomLevel >= 1.25}
+                        className={`p-2 rounded-lg border transition-all cursor-pointer ${
+                          zoomLevel >= 1.25
+                            ? "bg-[#fafaf9] border-[#fafaf9] text-[#d6d3d1] cursor-not-allowed"
+                            : "bg-white border-[#e7e5e4] text-[#79716b] hover:bg-[#fafaf9]"
+                        }`}
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                        </svg>
+                      </button>
+                      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
+                        {language === "id" ? "Perbesar" : "Zoom In"} ({Math.round(zoomLevel * 100)}%)
                       </div>
-                    )}
+                    </div>
 
                     {/* Zoom Out Button */}
-                    {spatialMode === "grid" && (
-                      <div className="relative group">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); zoomOut(); }}
-                          disabled={zoomLevel <= 0.5}
-                          className={`p-2 rounded-lg border transition-all cursor-pointer ${
-                            zoomLevel <= 0.5
-                              ? "bg-[#fafaf9] border-[#fafaf9] text-[#d6d3d1] cursor-not-allowed"
-                              : "bg-white border-[#e7e5e4] text-[#79716b] hover:bg-[#fafaf9]"
-                          }`}
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
-                          </svg>
-                        </button>
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
-                          {language === "id" ? "Perkecil" : "Zoom Out"} ({zoomLevel * 100}%)
-                        </div>
+                    <div className="relative group">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); zoomOut(); }}
+                        disabled={zoomLevel <= 0.5}
+                        className={`p-2 rounded-lg border transition-all cursor-pointer ${
+                          zoomLevel <= 0.5
+                            ? "bg-[#fafaf9] border-[#fafaf9] text-[#d6d3d1] cursor-not-allowed"
+                            : "bg-white border-[#e7e5e4] text-[#79716b] hover:bg-[#fafaf9]"
+                        }`}
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
+                        </svg>
+                      </button>
+                      <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 md:left-14 md:-translate-x-0 md:top-1/2 md:-translate-y-1/2 hidden group-hover:block bg-[#292524] text-white text-xs font-medium px-2.5 py-1 rounded-md shadow-md whitespace-nowrap z-30">
+                        {language === "id" ? "Perkecil" : "Zoom Out"} ({Math.round(zoomLevel * 100)}%)
                       </div>
-                    )}
+                    </div>
 
                     {/* Divider for Owner tools */}
-                    {isOwner && spatialMode === "grid" && <div className="w-full md:w-8 h-px bg-[#e7e5e4] my-0 md:my-1" />}
+                    {isOwner && <div className="w-full md:w-8 h-px bg-[#e7e5e4] my-0 md:my-1" />}
 
                     {/* Draw Area Toggle Button */}
-                    {isOwner && spatialMode === "grid" && (
+                    {isOwner && (
                       <div className="relative group">
                         <button
                           onClick={(e) => { e.stopPropagation(); setIsDrawingMode(!isDrawingMode); }}
@@ -1599,7 +1545,7 @@ export default function PlotDetailPage() {
                     )}
 
                     {/* Clear Areas Button */}
-                    {isOwner && spatialMode === "grid" && plotAreas.length > 0 && (
+                    {isOwner && plotAreas.length > 0 && (
                       <div className="relative group">
                         <button
                           onClick={(e) => {
@@ -1627,8 +1573,7 @@ export default function PlotDetailPage() {
 
                   {/* Canvas Container */}
                   <div className="flex-1 min-w-0 relative">
-                    {spatialMode === "grid" ? (
-                      <>
+                    <>
                         <div 
                           ref={containerRef}
                           style={{ height: "650px" }} 
@@ -1985,28 +1930,7 @@ export default function PlotDetailPage() {
                         <span>{language === "id" ? "1 kotak grid = 2 meter" : "1 grid cell = 2 meters"}</span>
                       </div>
                     </>
-                  ) : (
-                    <div className="flex flex-col gap-2 w-full">
-                      {gpsScans.length < scans.length && (
-                        <div className="flex items-center gap-1.5 px-3 py-2 bg-amber-50 border border-amber-100 text-[10px] font-semibold text-amber-800 rounded-lg select-none">
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-                          <span>
-                            {language === "id"
-                              ? `Menampilkan ${gpsScans.length} dari ${scans.length} pohon — sisanya tidak memiliki data GPS`
-                              : `Showing ${gpsScans.length} of ${scans.length} trees — the rest do not have GPS data`}
-                          </span>
-                        </div>
-                      )}
-                      <div style={{ height: `${DEFAULT_ROWS * CELL_SIZE}px` }} className="border border-[#e7e5e4] rounded-lg overflow-hidden relative">
-                        <PlotMap
-                          scans={scans}
-                          centroidLat={plot?.gps_centroid_lat || null}
-                          centroidLon={plot?.gps_centroid_lon || null}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
+                  </div>
               </div>
             </div>
 
