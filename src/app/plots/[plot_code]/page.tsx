@@ -298,22 +298,32 @@ export default function PlotDetailPage() {
     };
 
     const findAvailableCell = () => {
-      for (let y = 0; y < DEFAULT_ROWS - 1; y += 2) {
-        for (let x = 0; x < cols - 1; x += 2) {
+      // Search outward radially from the active center of the grid canvas
+      const midX = Math.max(2, Math.floor(cols / 2));
+      const midY = Math.max(2, Math.min(Math.floor(DEFAULT_ROWS / 2), 12));
+      const maxR = Math.max(cols, DEFAULT_ROWS);
+
+      for (let r = 0; r < maxR; r += 2) {
+        for (let dy = -r; dy <= r; dy += 2) {
+          for (let dx = -r; dx <= r; dx += 2) {
+            const nx = midX + dx;
+            const ny = midY + dy;
+            if (nx >= 2 && nx <= cols - 3 && ny >= 2 && ny <= DEFAULT_ROWS - 3 && !isOccupied(nx, ny)) {
+              return { x: nx, y: ny };
+            }
+          }
+        }
+      }
+
+      // Sequential fallback with boundary margins
+      for (let y = 2; y < DEFAULT_ROWS - 2; y += 2) {
+        for (let x = 2; x < cols - 2; x += 2) {
           if (!isOccupied(x, y)) {
             return { x, y };
           }
         }
       }
-      // fall back to sequential cells if stepped grid is full
-      for (let y = 0; y < DEFAULT_ROWS - 1; y++) {
-        for (let x = 0; x < cols - 1; x++) {
-          if (!isOccupied(x, y)) {
-            return { x, y };
-          }
-        }
-      }
-      return { x: 0, y: 0 };
+      return { x: midX, y: midY };
     };
 
     // 2. Map relative GPS coordinates to empty grid cells for scans that have GPS
@@ -328,12 +338,18 @@ export default function PlotDetailPage() {
       const minLon = Math.min(...lons);
       const maxLon = Math.max(...lons);
 
+      // Add generous margin padding so trees are centered and not hugging boundaries
+      const marginX = Math.max(4, Math.floor(cols * 0.18));
+      const marginY = Math.max(4, Math.floor(Math.min(DEFAULT_ROWS, 26) * 0.18));
+      const activeCols = Math.max(4, cols - (marginX * 2));
+      const activeRows = Math.max(4, Math.min(DEFAULT_ROWS, 26) - (marginY * 2));
+
       gpsScans.forEach((scan) => {
         const lat = scan.gps_lat as number;
         const lon = scan.gps_lon as number;
 
-        let targetX = minLon === maxLon ? Math.floor(cols / 2) : Math.round(((lon - minLon) / (maxLon - minLon)) * (cols - 2));
-        let targetY = minLat === maxLat ? Math.floor(DEFAULT_ROWS / 2) : (DEFAULT_ROWS - 2) - Math.round(((lat - minLat) / (maxLat - minLat)) * (DEFAULT_ROWS - 2));
+        let targetX = minLon === maxLon ? Math.floor(cols / 2) : marginX + Math.round(((lon - minLon) / (maxLon - minLon)) * activeCols);
+        let targetY = minLat === maxLat ? Math.floor(activeRows / 2) + marginY : (marginY + activeRows) - Math.round(((lat - minLat) / (maxLat - minLat)) * activeRows);
 
         // Ensure indices are even numbers to align nicely with 2x2 grid stepping
         targetX = Math.round(targetX / 2) * 2;
