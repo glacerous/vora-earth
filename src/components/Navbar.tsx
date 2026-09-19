@@ -27,11 +27,11 @@ export default function Navbar() {
             className="h-4.5 sm:h-5.5 w-auto object-contain transition-transform group-hover:scale-105"
           />
           <svg
-            className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#616c39] transition-transform duration-500 group-hover:rotate-45 shrink-0"
+            className="w-5 h-5 sm:w-[22px] sm:h-[22px] text-[#616c39] translate-y-[2px] transition-transform duration-500 group-hover:rotate-45 shrink-0"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.5"
+            strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden="true"
