@@ -105,7 +105,7 @@ export function formatCo2e(co2e_kg: number | null | undefined, unit: UnitSystem 
   return `${co2e_kg.toFixed(0)} kg CO₂e`;
 }
 
-export function translateConfidenceNote(note: string | null | undefined, language: Language = "id"): string {
+export function translateConfidenceNote(note: string | null | undefined, language: Language = "en"): string {
   if (!note) return "";
   if (language === "id") {
     let res = note;
@@ -739,7 +739,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   // Settings state (persistent with localStorage)
-  const [language, setLanguageState] = useState<Language>("id");
+  const [language, setLanguageState] = useState<Language>("en");
   const [unit, setUnitState] = useState<UnitSystem>("metric");
   const [splatQuality, setSplatQualityState] = useState<SplatQuality>("high");
   const [autoRotate, setAutoRotateState] = useState<boolean>(true);
@@ -807,7 +807,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const resetSettings = () => {
-    setLanguage("id");
+    setLanguage("en");
     setUnit("metric");
     setSplatQuality("high");
     setAutoRotate(true);
@@ -817,7 +817,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const t = (key: string, fallback?: string): string => {
     const entry = translations[key];
     if (!entry) return fallback || key;
-    return entry[language] || entry["id"] || fallback || key;
+    return entry[language] || entry["en"] || entry["id"] || fallback || key;
   };
 
   const fetchUser = async () => {
